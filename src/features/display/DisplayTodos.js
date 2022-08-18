@@ -1,10 +1,12 @@
-import Todo from '../todos/Todo';
+
+import TodoForm from '../todos/TodosForm';
 
 const DisplayTodos = () => {
     return (
         <>
             <h1>Todo's</h1>
-            <Todo />
+            <TodoForm />
+
         </>
     );
 };
