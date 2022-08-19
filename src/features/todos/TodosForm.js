@@ -22,7 +22,7 @@ const TodoForm = () => {
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='todoText'>Enter Task</label>
+                <label htmlFor='todoText'>Enter Task </label>
                 <Field id='todoText' name='todoText' placeholder='Task...' />
                 <button type='submit'>Add</button>
             </Form>
