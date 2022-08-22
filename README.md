@@ -1,46 +1,21 @@
-# Getting Started with Create React App and Redux
+# A Side Project by Ahmed Al-Qossab
+I struggle with Time and Task managment, and I can't seem to get use to any of these App's out there so I thought might as well create my own.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This app will allow users to manage thier time bases on thier days and hours. Each day will be easily created and managed with this app, allowing the users feel at easy and that thier schedule will fit them rather then the schedule being forced into them.
 
-## Available Scripts
+## To-Do List Prototype - In Progress
+The To-Do list prototype is just getting a basic to-do list working with later on sub tasks in each todo.
 
-In the project directory, you can run:
+## Folders Prototype
+The Folders prototype is a way for the user to manage todos in folders for easier focus on tasks, allowing users to seprate there lists into catagories with coloured accents.
 
-### `npm start`
+## Daily Calander Prototype
+The Daily calander will be on the right side with a start in end time vertically. *times are choosen by user beforehand* you will be able to drag and drop a todo or a folder into a time slot for the day for better scheduling.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Users prototype
+Users prototype will give users access to there todos anywhere all saved on the cloud and will have an option for adding others to see but not edit your list
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## UI and UX concepts
+UI and UX concepts will be created after futher studies on UI and UX.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+There is no due date for this Side Project since it's mainly a passion project this will be worked on at my free time.
