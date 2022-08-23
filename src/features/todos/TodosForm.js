@@ -22,8 +22,8 @@ const TodoForm = () => {
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='todoText'>Enter Task </label>
-                <Field id='todoText' name='todoText' placeholder='Task...' />
+                <label htmlFor='task'>Enter Task </label>
+                <Field id='task' name='task' placeholder='Task...' classname='form-control' />
                 <button type='submit'>Add</button>
             </Form>
         </Formik>

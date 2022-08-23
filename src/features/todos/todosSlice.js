@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
 export const fetchTodos = createAsyncThunk(
@@ -15,10 +16,10 @@ export const fetchTodos = createAsyncThunk(
 
 export const postTodo = createAsyncThunk(
     'todos/postTodo',
-    async (todos, { dispatch }) => {
+    async (todo, { dispatch }) => {
         const response = await fetch(baseUrl + 'todos', {
             method: 'POST',
-            body: JSON.stringify(todos),
+            body: JSON.stringify(todo),
             headers: {'Content-Type':'application/json'},
         });
 

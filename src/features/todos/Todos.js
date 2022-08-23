@@ -1,12 +1,11 @@
-const Todo = ({ todo }) => {
+const Todos = ({ todo }) => {
     const { text: todoText,} = todo;
 
     return (
-        <p>
+        <li>
             {todoText}
-            <br />
-        </p>
+        </li>
     );
 };
 
-export default Todo;
+export default Todos;
