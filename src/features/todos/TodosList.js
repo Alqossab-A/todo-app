@@ -22,8 +22,8 @@ const TodosList = () => {
     if ( Todos && Todos.length > 0) {
         return (
             <>
-                {Todos.map((todo) => {
-                    return <Todos todo={todo} />
+                {Todos.map((todos) => {
+                    return <Todos todos={todos} />
                 })}
             </>
         );

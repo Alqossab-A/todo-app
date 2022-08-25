@@ -7,7 +7,7 @@ const TodoForm = () => {
 
     const handleSubmit = (values) => {
         const todo = {
-            text: values.todoText,
+            text: values.todosText,
         };
         console.log('todos:', todo);
 
@@ -17,13 +17,13 @@ const TodoForm = () => {
     return (
         <Formik
             initialValues={{
-                todoText: '',
+                todosText: '',
             }}
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='task'>Enter Task </label>
-                <Field id='task' name='task' placeholder='Task...' classname='form-control' />
+                <label htmlFor='todosText'>Enter Task </label>
+                <Field id='todosText' name='todosText' placeholder='Task...' classname='form-control' />
                 <button type='submit'>Add</button>
             </Form>
         </Formik>

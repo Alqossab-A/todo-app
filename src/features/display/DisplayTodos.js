@@ -6,9 +6,7 @@ const DisplayTodos = () => {
         <>
             <h1>Todo's</h1>
             <TodoForm />
-            <li>
-                <TodosList />
-            </li>
+            <TodosList />
         </>
     );
 };
