@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
 export const fetchTodos = createAsyncThunk(
-    'todos/fetchTodo',
+    'todos/fetchTodos',
     async () => {
         const response = await fetch(baseUrl + 'todos');
         if (!response.ok) {
@@ -58,7 +58,7 @@ const todosSlice = createSlice({
         [fetchTodos.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.errMsg = '';
-            state.commentsArray = action.payload;
+            state.todosArray = action.payload;
         },
         [fetchTodos.rejected]: (state, action) => {
             state.isLoading = false;
@@ -72,6 +72,11 @@ const todosSlice = createSlice({
         }
     }
 });
+
+export const selectAllTodos = (state) => {
+    return state.todos.todosArray;
+};
+
 
 export const todoReducer = todosSlice.reducer;
 
