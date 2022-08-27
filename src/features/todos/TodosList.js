@@ -6,7 +6,6 @@ import { selectAllTodos } from './todosSlice';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);
-    console.log('todos:', todos);
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
@@ -27,9 +26,7 @@ const TodosList = () => {
         <>
         {todos.map((todo) => {
             return (
-                <li key={todo.id}>
-                    <Todos todo={todo} />
-                </li>
+                <Todos key={todo.id} todo={todo} />
             )
         })}
         </>
