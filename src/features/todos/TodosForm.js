@@ -5,11 +5,12 @@ import { Formik, Field, Form } from 'formik';
 const TodoForm = () => {
     const dispatch = useDispatch();
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values, { resetForm }) => {
         const todo = {
             text: values.todosText,
         };
         console.log('todos:', todo);
+        resetForm();
 
         dispatch(postTodo(todo));
     };
