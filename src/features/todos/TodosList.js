@@ -26,7 +26,9 @@ const TodosList = () => {
         <>
         {todos.map((todo) => {
             return (
+                <>
                 <Todos key={todo.id} todo={todo} />
+                </>
             )
         })}
         </>

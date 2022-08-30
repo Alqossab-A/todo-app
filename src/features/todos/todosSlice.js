@@ -50,6 +50,9 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
+        deleteTodo: (state, action) => {
+            return state.filter((todo) => todo.id !== action.payload.id);
+        }
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -77,7 +80,6 @@ export const selectAllTodos = (state) => {
     return state.todos.todosArray;
 };
 
-
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo } = todosSlice.actions;
+export const { addTodo, deleteTodo } = todosSlice.actions;
