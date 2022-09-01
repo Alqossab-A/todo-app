@@ -31,6 +31,21 @@ export const postTodo = createAsyncThunk(
     }
 );
 
+export const deleteTodo = createAsyncThunk(
+    'todos/deleteTodo',
+    async (todo, { dispatch }) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`,{
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status)
+        }
+        const data = await response.json();
+        dispatch(deleteTodo(data));
+    }
+)
+
 const initialState = {
     todosArray: [],
     isLoading: true,
@@ -51,7 +66,9 @@ const todosSlice = createSlice({
             state.todosArray.push(newTodo);
         },
         deleteTodo: (state, action) => {
-            return state.filter((todo) => todo.id !== action.payload.id);
+            console.log(action)
+            const todoId = action.payload
+            return state.todosArray.filter((todo) => todo.id !== todoId);
         }
     },
     extraReducers: {
@@ -82,4 +99,4 @@ export const selectAllTodos = (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, deleteTodo } = todosSlice.actions;
+export const { addTodo, removeTodo } = todosSlice.actions;

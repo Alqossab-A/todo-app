@@ -6,13 +6,18 @@ const Todos = ({ todo }) => {
 
     const dispatch = useDispatch();
 
-    const handleDelete = () => {
-        dispatch(deleteTodo({ id}));
-    };
-
     return (
         <>
-            <li>{text} <button onClick={handleDelete}>Delete</button></li>
+            <li>
+                {text}{' '}
+                <button
+                    onClick={() => {
+                        dispatch(deleteTodo(todo.id));
+                    }}
+                >
+                    Delete
+                </button>
+            </li>
         </>
     );
 };
