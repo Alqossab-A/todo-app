@@ -9,7 +9,6 @@ const TodoForm = () => {
         const todo = {
             text: values.todosText,
         };
-        console.log('todos:', todo);
         resetForm();
 
         dispatch(postTodo(todo));

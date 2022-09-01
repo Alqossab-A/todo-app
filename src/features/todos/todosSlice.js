@@ -26,6 +26,7 @@ export const postTodo = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status)
         }
+
         const data = await response.json();
         dispatch(addTodo(data));
     }
@@ -33,14 +34,15 @@ export const postTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
-    async (todo, { dispatch }) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`,{
+    async (id, { dispatch }) => {
+        const response = await fetch(baseUrl + `todos/${id}`,{
             method: 'DELETE'
         });
 
         if (!response.ok) {
             return Promise.reject(response.status)
         }
+
         const data = await response.json();
         dispatch(deleteTodo(data));
     }
@@ -68,7 +70,7 @@ const todosSlice = createSlice({
         deleteTodo: (state, action) => {
             console.log(action)
             const todoId = action.payload
-            return state.todosArray.filter((todo) => todo.id !== todoId);
+            return state.todosArray.filter((todo) => todo !== todoId);
         }
     },
     extraReducers: {
