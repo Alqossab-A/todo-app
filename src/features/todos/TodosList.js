@@ -6,6 +6,7 @@ import { selectAllTodos } from './todosSlice';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);
+    console.info(todos);
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
@@ -32,7 +33,7 @@ const TodosList = () => {
         );
     }
 
-    return <p>You have no todos.</p>;
+    return <p>Enter a todo</p>;
 };
 
 export default TodosList;

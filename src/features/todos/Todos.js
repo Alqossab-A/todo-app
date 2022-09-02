@@ -16,7 +16,7 @@ const Todos = ({ todo }) => {
                         dispatch(deleteTodo(id));
                     }}
                 >
-                    X
+                    -
                 </button>
             </li>
         </>
