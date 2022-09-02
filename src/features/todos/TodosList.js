@@ -11,26 +11,28 @@ const TodosList = () => {
     const errMsg = useSelector((state) => state.todos.errMsg);
 
     if (isLoading) {
-        return (
-            <Loading />
-        );
+        return <Loading />;
     }
 
     if (errMsg) {
+        return <Error errMsg={errMsg} />;
+    }
+
+    if (todos && todos.length > 0) {
         return (
-            <Error errMsg={errMsg} />
+            <>
+                {todos.map((todo) => {
+                    return (
+                        <div key={todo.id}>
+                            <Todos todo={todo} />
+                        </div>
+                    );
+                })}
+            </>
         );
     }
 
-    return (
-        <>
-        {todos.map((todo) => {
-            return (
-                <Todos key={todo.id} todo={todo} />
-            )
-        })}
-        </>
-    );
+    return <p>You have no todos.</p>;
 };
 
 export default TodosList;

@@ -1,21 +1,22 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo } from './todosSlice';
 
 const Todos = ({ todo }) => {
-    const { text } = todo;
+    const { text , id} = todo;
 
     const dispatch = useDispatch();
 
     return (
         <>
-            <li>
+            <li key={id}>
                 {text}{' '}
                 <button
                     onClick={() => {
-                        dispatch(deleteTodo(todo.id));
+                        dispatch(deleteTodo(id));
                     }}
                 >
-                    -
+                    X
                 </button>
             </li>
         </>

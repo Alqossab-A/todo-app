@@ -36,7 +36,7 @@ export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
     async (id, { dispatch }) => {
         const response = await fetch(baseUrl + `todos/${id}`,{
-            method: 'DELETE'
+            method: 'DELETE',
         });
 
         if (!response.ok) {
