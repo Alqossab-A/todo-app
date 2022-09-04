@@ -6,7 +6,7 @@ import { selectAllTodos } from './todosSlice';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);
-    console.info(todos);
+    console.info(todos)
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
