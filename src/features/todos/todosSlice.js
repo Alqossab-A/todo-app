@@ -43,9 +43,6 @@ export const deleteTodo = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status)
         }
-
-        const data = await response.json();
-        dispatch(deleteTodo(data));
     }
 )
 
