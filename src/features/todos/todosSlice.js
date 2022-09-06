@@ -34,14 +34,17 @@ export const postTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
-    async (id, { dispatch }) => {
-        const response = await fetch(baseUrl + `todos/${id}`,{
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`,{
             method: 'DELETE',
-            body: JSON.stringify(id),
         });
 
         if (!response.ok) {
             return Promise.reject(response.status)
+        }
+
+        if (response.ok) {
+            return { id: todo.id }
         }
     }
 )
@@ -64,10 +67,6 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        deleteTodo: (state, action) => ({
-            ...state,
-            todos: state.todos.filter(todo => todo !== action.payload)
-        })
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -87,6 +86,9 @@ const todosSlice = createSlice({
                 'Your todo could not be posted\nError: ' +
                     (action.error ? action.error.message: 'Fetch failed')
             );
+        },
+        [deleteTodo.fulfilled]: (state, action) => {
+            return state.todos.todosArray.filter(todo => todo.id !== action.id)
         }
     }
 });
@@ -103,4 +105,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, removeTodo } = todosSlice.actions;
+export const { addTodo } = todosSlice.actions;
