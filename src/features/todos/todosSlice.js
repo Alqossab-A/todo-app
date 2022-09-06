@@ -88,7 +88,7 @@ const todosSlice = createSlice({
             );
         },
         [deleteTodo.fulfilled]: (state, action) => {
-            return state.todos.todosArray.filter(todo => todo.id !== action.id)
+            state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
         }
     }
 });
