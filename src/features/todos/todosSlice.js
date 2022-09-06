@@ -32,6 +32,24 @@ export const postTodo = createAsyncThunk(
     }
 );
 
+/*export const postSubTodo = createAsyncThunk(
+    'todos/postTodo',
+    async (todo, { dispatch }) => {
+        const response = await fetch(baseUrl + 'todos', {
+            method: 'POST',
+            body: JSON.stringify(todo),
+            headers: {'Content-Type':'application/json'},
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status)
+        }
+
+        const data = await response.json();
+        dispatch(addTodo(data));
+    }
+);*/
+
 export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
     async (todo) => {
