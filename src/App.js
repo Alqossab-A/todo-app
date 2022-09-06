@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage';
 
 function App() {
   const isMounted = useRef()
-
   const dispatch = useDispatch();
 
   useEffect(() => {
