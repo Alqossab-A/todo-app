@@ -24,7 +24,7 @@ const TodosList = () => {
                 {todos.map((todo) => {
                     return (
                         <div key={todo.id}>
-                            <Todos todo={todo} />
+                            <Todos key={todo.id} todo={todo} />
                         </div>
                     );
                 })}
