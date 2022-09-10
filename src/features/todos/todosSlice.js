@@ -32,10 +32,10 @@ export const postTodo = createAsyncThunk(
     }
 );
 
-export const updateTodos = createAsyncThunk(
+export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
-    async (todo, { dispatch }) => {
-        const response = await fetch(baseUrl + 'todos', {
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
             body: JSON.stringify(todo),
             headers: {'Content-Type':'application/json'},
@@ -82,17 +82,14 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        updateTodo: (state, action) => {
-            state.todosArray.map((todo) => {
+        /*updateTodo: (state, action) => {
+            state.todosArray.find((todo) => {
                 if (todo.id === action.payload.id) {
-                    return {
-                        ...todo,
-                        text: action.payload.text,
-                    };
-                };
+                    todo.text = action.payload.text;
+                }
                 return todo;
             });
-        }
+        },*/
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -116,6 +113,13 @@ const todosSlice = createSlice({
         [deleteTodo.fulfilled]: (state, action) => {
             state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
         },
+        [updateTodo.fulfilled]: (state, action) => {
+            const index = state.todosArray.find(todo => todo.id === action.payload.id);
+            state[index] = {
+                ...state[index],
+                ...action.payload,
+            };
+        }
     }
 });
 
@@ -131,4 +135,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, updateTodo} = todosSlice.actions;
+export const { addTodo } = todosSlice.actions;

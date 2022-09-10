@@ -14,8 +14,8 @@ const Todos = ({ todo }) => {
                     type='text'
                     id={id}
                     value={text}
-                    onChange={() => {
-                        dispatch(updateTodo(todo));
+                    onChange={(value) => {
+                        dispatch(updateTodo(value));
                     }}
                 />
                 <button
