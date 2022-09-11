@@ -37,15 +37,13 @@ export const updateTodo = createAsyncThunk(
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
-            body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'},
         })
 
         if (!response.ok) {
             return Promise.reject(response.status)
         }
     }
-)
+);
 
 export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
@@ -82,14 +80,6 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        /*updateTodo: (state, action) => {
-            state.todosArray.find((todo) => {
-                if (todo.id === action.payload.id) {
-                    todo.text = action.payload.text;
-                }
-                return todo;
-            });
-        },*/
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -114,12 +104,11 @@ const todosSlice = createSlice({
             state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
         },
         [updateTodo.fulfilled]: (state, action) => {
-            const index = state.todosArray.find(todo => todo.id === action.payload.id);
-            state[index] = {
-                ...state[index],
-                ...action.payload,
-            };
-        }
+            const index = state.todosArray.findIndex(todo => todo.id === action.payload.id);
+            if (index !== -1) {
+                state.todosArray[index] = { ...action.payload }
+            }
+        },
     }
 });
 
