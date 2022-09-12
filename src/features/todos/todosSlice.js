@@ -34,7 +34,7 @@ export const postTodo = createAsyncThunk(
 
 export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
-    async (todo) => {
+    async (todo, { dispatch }) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
         })
@@ -42,6 +42,9 @@ export const updateTodo = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status)
         }
+
+        const data = await response.json();
+        dispatch(updateTodos(data));
     }
 );
 
@@ -80,6 +83,17 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
+        updateTodos: (state, action) => {
+            return state.todosArray.map( todo => {
+                if(todo.id === action.payload.id) {
+                    return {
+                        ...todo,
+                        text: action.payload.text,
+                    }
+                }
+                return todo;
+            })
+        }
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -107,7 +121,7 @@ const todosSlice = createSlice({
             const index = state.todosArray.findIndex(todo => todo.id === action.payload.id);
             if (index !== -1) {
                 state.todosArray[index] = { ...action.payload }
-            }
+            };
         },
     }
 });
@@ -124,4 +138,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo } = todosSlice.actions;
+export const { addTodo, updateTodos } = todosSlice.actions;

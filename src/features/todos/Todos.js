@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTodo, updateTodo } from './todosSlice';
+import { deleteTodo, updateTodos } from './todosSlice';
 
 const Todos = ({ todo }) => {
     const { id, text } = todo;
@@ -15,7 +15,7 @@ const Todos = ({ todo }) => {
                     id={id}
                     value={text}
                     onChange={() => {
-                        dispatch(updateTodo(todo));
+                        dispatch(updateTodos(todo));
                     }}
                 />
                 <button
