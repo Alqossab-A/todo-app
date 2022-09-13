@@ -2,16 +2,18 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodos } from './todosSlice';
 
-const Todos = (todo) => {
+const Todos = ({ todo }) => {
+    const { id, text } = todo;
+
     const dispatch = useDispatch();
 
     return (
         <>
-            <li key={todo.id}>
+            <li key={id}>
                 <input
                     type='text'
-                    id={todo.id}
-                    value={todo.text}
+                    id={id}
+                    value={text}
                     onChange={() => {
                         dispatch(updateTodos(todo));
                     }}
