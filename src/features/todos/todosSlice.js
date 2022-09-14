@@ -37,6 +37,8 @@ export const updateTodo = createAsyncThunk(
     async (todo, { dispatch }) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
+            body: JSON.stringify(todo),
+            headers: {'Content-Type':'application/json'}
         })
 
         if (!response.ok) {
@@ -53,8 +55,6 @@ export const deleteTodo = createAsyncThunk(
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`,{
             method: 'DELETE',
-            body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
         });
 
         if (!response.ok) {

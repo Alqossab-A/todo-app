@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodos } from './todosSlice';
 
-const Todos = ({ todo }) => {
-    const { id, text } = todo;
+const Todos = (props) => {
+    const todo = props.todo;
 
+    const [inputValue, setInputValue] = useState(todo.text);
     const dispatch = useDispatch();
 
     return (
         <>
-            <li key={id}>
+            <li key={todo.id}>
                 <input
                     type='text'
-                    id={id}
-                    value={text}
-                    onChange={() => {
-                        dispatch(updateTodos(todo));
+                    id={todo.id}
+                    value={inputValue}
+                    onChange={(e) => {
+                        dispatch(updateTodos(setInputValue(e.target.value, todo.id)));
                     }}
                 />
                 <button
                     onClick={() => {
-                        dispatch(deleteTodo(todo));
+                        dispatch(deleteTodo(props.todo));
                     }}
                 >
                     -
