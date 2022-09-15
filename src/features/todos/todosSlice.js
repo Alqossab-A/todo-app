@@ -85,16 +85,16 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        updateTodos: (state, action) => {
-            return state.todosArray.map( todo => {
-                if(todo.id === action.payload.id) {
+        updateTodo: (state, action) => {
+            state.todosArray.map((todo) => {
+                if (todo.id === action.payload.id) {
                     return {
                         ...todo,
                         text: action.payload.text,
-                    }
-                }
+                    };
+                };
                 return todo;
-            })
+            });
         }
     },
     extraReducers: {
