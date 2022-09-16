@@ -32,28 +32,10 @@ export const postTodo = createAsyncThunk(
     }
 );
 
-export const updateTodo = createAsyncThunk(
-    'todos/updateTodo',
-    async (todo, { dispatch }) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
-
-        if (!response.ok) {
-            return Promise.reject(response.status)
-        }
-
-        const data = await response.json();
-        dispatch(updateTodos(data));
-    }
-);
-
 export const deleteTodo = createAsyncThunk(
     'todos/deleteTodo',
     async (todo) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`,{
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'DELETE',
         });
 
@@ -65,7 +47,26 @@ export const deleteTodo = createAsyncThunk(
             return { id: todo.id }
         }
     }
-)
+);
+
+export const updateTodo = createAsyncThunk(
+    'todos/updateTodo',
+    async (payload, { dispatch }) => {
+        const response = await fetch(baseUrl + `todos/${payload.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(payload),
+            headers: {'Content-Type':'application/json'}
+        })
+
+        if (!response.ok) {
+            return Promise.reject(response.status)
+        }
+
+        const data = await response.json();
+        dispatch(updateTodos(data));
+        console.log('UpdateTodo:', payload);
+    }
+);
 
 const initialState = {
     todosArray: [],
@@ -90,7 +91,7 @@ const todosSlice = createSlice({
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
-                        text: action.payload.text,
+                        todo: action.payload,
                     };
                 };
                 return todo;

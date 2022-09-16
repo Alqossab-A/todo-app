@@ -4,10 +4,25 @@ import { deleteTodo, updateTodo } from './todosSlice';
 
 const Todos = (props) => {
     const todo = props.todo;
-    const {id, text} = todo
+    const { id, text } = todo;
 
     const [inputValue, setInputValue] = useState(text);
     const dispatch = useDispatch();
+
+    const HandleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            dispatch(updateTodo(inputValue));
+        }
+    };
+
+    const HandleOnChange = (e) => {
+        console.log('Before onChange:', todo);
+        setInputValue(e.target.value);
+    };
+
+    const HandleDelete = () => {
+        dispatch(deleteTodo(todo));
+    }
 
     return (
         <>
@@ -16,14 +31,11 @@ const Todos = (props) => {
                     type='text'
                     id={id}
                     value={inputValue}
-                    onChange={(e) => {
-                        dispatch(updateTodo(setInputValue(e.target.value), id));
-                    }}
+                    onChange={HandleOnChange}
+                    onKeyPress={HandleKeyPress}
                 />
                 <button
-                    onClick={() => {
-                        dispatch(deleteTodo(props.todo));
-                    }}
+                    onClick={HandleDelete}
                 >
                     -
                 </button>
