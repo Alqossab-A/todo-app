@@ -11,22 +11,22 @@ const Todos = (props) => {
 
     const HandleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            dispatch(updateTodo(inputValue));
+            console.log('HandleKeyPress:', inputValue, id);
+            dispatch(updateTodo({ payload: inputValue, id: id }));
         }
     };
 
     const HandleOnChange = (e) => {
-        console.log('Before onChange:', todo);
         setInputValue(e.target.value);
     };
 
     const HandleDelete = () => {
         dispatch(deleteTodo(todo));
-    }
+    };
 
     return (
         <>
-            <li key={id}>
+            <div key={id}>
                 <input
                     type='text'
                     id={id}
@@ -34,12 +34,8 @@ const Todos = (props) => {
                     onChange={HandleOnChange}
                     onKeyPress={HandleKeyPress}
                 />
-                <button
-                    onClick={HandleDelete}
-                >
-                    -
-                </button>
-            </li>
+                <button onClick={HandleDelete}>-</button>
+            </div>
         </>
     );
 };

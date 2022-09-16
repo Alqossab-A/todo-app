@@ -49,12 +49,12 @@ export const deleteTodo = createAsyncThunk(
     }
 );
 
-export const updateTodo = createAsyncThunk(
+export const updateTodos = createAsyncThunk(
     'todos/updateTodo',
-    async (payload, { dispatch }) => {
-        const response = await fetch(baseUrl + `todos/${payload.id}`, {
+    async (todo, { dispatch }) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
-            body: JSON.stringify(payload),
+            body: JSON.stringify(todo),
             headers: {'Content-Type':'application/json'}
         })
 
@@ -64,7 +64,7 @@ export const updateTodo = createAsyncThunk(
 
         const data = await response.json();
         dispatch(updateTodos(data));
-        console.log('UpdateTodo:', payload);
+        console.log('UpdateTodo:', todo);
     }
 );
 
@@ -120,7 +120,7 @@ const todosSlice = createSlice({
         [deleteTodo.fulfilled]: (state, action) => {
             state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
         },
-        [updateTodo.fulfilled]: (state, action) => {
+        [updateTodos.fulfilled]: (state, action) => {
             const index = state.todosArray.findIndex(todo => todo.id === action.payload.id);
             if (index !== -1) {
                 state.todosArray[index] = { ...action.payload }
@@ -141,4 +141,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, updateTodos } = todosSlice.actions;
+export const { addTodo, updateTodo } = todosSlice.actions;
