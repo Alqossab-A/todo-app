@@ -49,12 +49,13 @@ export const deleteTodo = createAsyncThunk(
     }
 );
 
-export const updateTodos = createAsyncThunk(
+export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
     async (todo, { dispatch }) => {
+        console.log('Update obj:',todo) //todo is now an object
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
-            body: JSON.stringify(todo),
+            body: JSON.stringify(todo.text), //since its an obj, change this to todo.text
             headers: {'Content-Type':'application/json'}
         })
 
@@ -64,7 +65,6 @@ export const updateTodos = createAsyncThunk(
 
         const data = await response.json();
         dispatch(updateTodos(data));
-        console.log('UpdateTodo:', todo);
     }
 );
 
@@ -86,12 +86,12 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        updateTodo: (state, action) => {
+        updateTodos: (state, action) => {
             state.todosArray.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
-                        todo: action.payload,
+                        text: action.payload,
                     };
                 };
                 return todo;
@@ -120,7 +120,7 @@ const todosSlice = createSlice({
         [deleteTodo.fulfilled]: (state, action) => {
             state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
         },
-        [updateTodos.fulfilled]: (state, action) => {
+        [updateTodo.fulfilled]: (state, action) => {
             const index = state.todosArray.findIndex(todo => todo.id === action.payload.id);
             if (index !== -1) {
                 state.todosArray[index] = { ...action.payload }
@@ -141,4 +141,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, updateTodo } = todosSlice.actions;
+export const { addTodo, updateTodos } = todosSlice.actions;

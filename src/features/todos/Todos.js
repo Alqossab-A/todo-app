@@ -9,15 +9,13 @@ const Todos = (props) => {
     const [inputValue, setInputValue] = useState(text);
     const dispatch = useDispatch();
 
-    const HandleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            console.log('HandleKeyPress:', inputValue, id);
-            dispatch(updateTodo({ payload: inputValue, id: id }));
-        }
-    };
-
-    const HandleOnChange = (e) => {
-        setInputValue(e.target.value);
+    const handleChange = (e) => {
+        setInputValue(e.target.value); //updates your component state
+        let obj = {
+            id: id,
+            text: e.target.value //adding to the obj to pass as an argument
+        };
+        dispatch(updateTodo(obj))
     };
 
     const HandleDelete = () => {
@@ -31,8 +29,7 @@ const Todos = (props) => {
                     type='text'
                     id={id}
                     value={inputValue}
-                    onChange={HandleOnChange}
-                    onKeyPress={HandleKeyPress}
+                    onChange={handleChange}
                 />
                 <button onClick={HandleDelete}>-</button>
             </div>
