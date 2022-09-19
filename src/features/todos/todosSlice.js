@@ -62,9 +62,6 @@ export const updateTodo = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status)
         }
-
-        const data = await response.json();
-        dispatch(updateTodos(data));
     }
 );
 
@@ -86,17 +83,6 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        updateTodos: (state, action) => {
-            state.todosArray.map((todo) => {
-                if (todo.id === action.payload.id) {
-                    return {
-                        ...todo,
-                        text: action.payload,
-                    };
-                };
-                return todo;
-            });
-        }
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
