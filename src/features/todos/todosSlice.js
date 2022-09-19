@@ -55,7 +55,7 @@ export const updateTodo = createAsyncThunk(
         console.log('Update obj:',todo) //todo is now an object
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
-            body: JSON.stringify(todo.text), //since its an obj, change this to todo.text
+            body: JSON.stringify(todo), //since its an obj, change this to todo.text
             headers: {'Content-Type':'application/json'}
         })
 
@@ -119,12 +119,6 @@ const todosSlice = createSlice({
         },
         [deleteTodo.fulfilled]: (state, action) => {
             state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
-        },
-        [updateTodo.fulfilled]: (state, action) => {
-            const index = state.todosArray.findIndex(todo => todo.id === action.payload.id);
-            if (index !== -1) {
-                state.todosArray[index] = { ...action.payload }
-            };
         },
     }
 });
