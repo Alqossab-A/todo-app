@@ -51,11 +51,11 @@ export const deleteTodo = createAsyncThunk(
 
 export const updateTodo = createAsyncThunk(
     'todos/updateTodo',
-    async (todo, { dispatch }) => {
-        console.log('Update obj:',todo) //todo is now an object
+    async (todo) => {
+        console.log('Update obj:',todo)
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
-            body: JSON.stringify(todo), //since its an obj, change this to todo.text
+            body: JSON.stringify(todo),
             headers: {'Content-Type':'application/json'}
         })
 

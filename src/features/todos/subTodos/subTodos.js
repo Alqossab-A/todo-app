@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from './todosSlice';
 
-const Todos = (props) => {
-    const todo = props.todo;
-    const { id, text } = todo;
+const subTodos = (props) => {
+    const subTodo = props.todo.subTodo;
+    const { id, text } = subTodo;
 
     const [inputValue, setInputValue] = useState(text);
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const Todos = (props) => {
     };
 
     const HandleDelete = () => {
-        dispatch(deleteTodo(todo));
+        dispatch(deleteTodo(subTodo));
     };
 
     return (
@@ -32,10 +32,9 @@ const Todos = (props) => {
                     onChange={handleChange}
                 />
                 <button onClick={HandleDelete}>-</button>
-                {/*<button onClick={HandleSubTodo}>+</button>*/}
             </div>
         </>
     );
 };
 
-export default Todos;
+export default subTodos;*/
