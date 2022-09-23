@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from './todosSlice';
@@ -10,14 +10,19 @@ const Todos = (props) => {
     const [inputValue, setInputValue] = useState(text);
     const dispatch = useDispatch();
 
-    const handleChange = debounce((e) => {
+    const debouncedDispatch = useCallback(
+        debounce((obj) => dispatch(updateTodo(obj)), 650),
+        [dispatch]
+    );
+
+    const handleChange = (e) => {
         setInputValue(e.target.value); //updates your component state
         let obj = {
             id: id,
-            text: e.target.value //adding to the obj to pass as an argument
+            text: e.target.value, //adding to the obj to pass as an argument
         };
-        dispatch(updateTodo(obj))
-    }, 250)
+        debouncedDispatch(obj);
+    };
 
     const HandleDelete = () => {
         dispatch(deleteTodo(todo));
