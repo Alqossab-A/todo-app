@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
+import TextareaAutosize from 'react-textarea-autosize';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from './todosSlice';
 
@@ -11,7 +12,7 @@ const Todos = (props) => {
     const dispatch = useDispatch();
 
     const debouncedDispatch = useCallback(
-        debounce((obj) => dispatch(updateTodo(obj)), 650),
+        debounce((obj) => dispatch(updateTodo(obj)), 850),
         [dispatch]
     );
 
@@ -31,7 +32,10 @@ const Todos = (props) => {
     return (
         <>
             <div key={id}>
-                <input
+                <TextareaAutosize
+                    className='todoTextArea'
+                    maxLength={100}
+                    minRows={1}
                     type='text'
                     id={id}
                     value={inputValue}
