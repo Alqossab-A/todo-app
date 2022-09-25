@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useDispatch } from 'react-redux';
@@ -11,8 +11,8 @@ const Todos = (props) => {
     const [inputValue, setInputValue] = useState(text);
     const dispatch = useDispatch();
 
-    const debouncedDispatch = useCallback(
-        debounce((obj) => dispatch(updateTodo(obj)), 850),
+    const debouncedDispatch = useMemo(
+        () => debounce((obj) => dispatch(updateTodo(obj)), 750),
         [dispatch]
     );
 
@@ -32,6 +32,7 @@ const Todos = (props) => {
     return (
         <>
             <div key={id}>
+                <input type='checkbox' key={id} />
                 <TextareaAutosize
                     className='todoTextArea'
                     maxLength={100}
@@ -42,8 +43,19 @@ const Todos = (props) => {
                     onChange={handleChange}
                 />
                 <button onClick={HandleDelete}>-</button>
-                {/*<button onClick={HandleSubTodo}>+</button>*/}
             </div>
+            <label>
+                <input type='radio' name='options' />
+                <span>Todo</span>
+            </label>
+            <label>
+                <input type='radio' name='options' />
+                <span>In Progress</span>
+            </label>
+            <label>
+                <input type='radio' name='options' />
+                <span>Done</span>
+            </label>
         </>
     );
 };
