@@ -44,18 +44,20 @@ const Todos = (props) => {
                 />
                 <button onClick={HandleDelete}>-</button>
             </div>
+            <div>
             <label>
-                <input type='radio' name='options' />
+                <input type='radio' defaultChecked name={id} id={id} />
                 <span>Todo</span>
             </label>
             <label>
-                <input type='radio' name='options' />
+                <input type='radio' name={id} id={id} />
                 <span>In Progress</span>
             </label>
             <label>
-                <input type='radio' name='options' />
+                <input type='radio' name={id} id={id} />
                 <span>Done</span>
             </label>
+            </div>
         </>
     );
 };
