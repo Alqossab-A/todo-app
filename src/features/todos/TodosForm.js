@@ -8,6 +8,7 @@ const TodoForm = () => {
     const handleSubmit = (values, { resetForm }) => {
         const todo = {
             text: values.todosForm,
+            todoStatus: 'todo'
         };
         resetForm();
 
