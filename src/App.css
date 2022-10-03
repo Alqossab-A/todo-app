@@ -5,4 +5,71 @@
 .todoTextArea {
     resize: none;
     overflow: hidden;
+    color: white;
+    background-color: rgb(75, 75, 75);
+    border: none;
+    padding: 1rem;
 }
+
+/*
+.todoContainer {
+    background-color: rgb(75, 75, 75);
+    margin: 1rem 16rem 1rem 16rem;
+    padding: 0.5rem;
+    border: 0.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0.1rem 0.1rem 0.1rem grey;
+}
+
+.todoInputs {
+    color: white;
+}
+
+.todoRadio {
+    width: 4rem;
+    height: 1.5rem;
+    border: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: lightgreen;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.todoSpan {
+    position: relative;
+    left: -3.3rem;
+    top: -0.4rem;
+}
+
+.inProRadio {
+    width: 8rem;
+    height: 1.5rem;
+    border: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: lightskyblue;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.inProSpan {
+    position: relative;
+    left: -6.7rem;
+    top: -0.4rem;
+}
+
+.doneRadio {
+    width: 4rem;
+    height: 1.5rem;
+    border: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: lightcoral;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.doneSpan {
+    position: relative;
+    left: 10rem;
+    top: -1.8rem;
+}
+*/

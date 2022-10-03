@@ -5,22 +5,22 @@ import { fetchTodos } from './features/todos/todosSlice';
 import HomePage from './pages/HomePage';
 
 function App() {
-  const isMounted = useRef()
-  const dispatch = useDispatch();
+    const isMounted = useRef();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isMounted.current) return
+    useEffect(() => {
+        if (isMounted.current) return;
 
-    dispatch(fetchTodos());
+        dispatch(fetchTodos());
 
-    isMounted.current = true;
-  },[dispatch]);
+        isMounted.current = true;
+    }, [dispatch]);
 
-  return (
-    <div className='App'>
-      <HomePage />
-    </div>
-  );
+    return (
+        <div className='App'>
+            <HomePage />
+        </div>
+    );
 }
 
 export default App;

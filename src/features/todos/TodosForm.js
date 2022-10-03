@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { postTodo } from './todosSlice';
-
 import { Formik, Field, Form } from 'formik';
 
 const TodoForm = () => {
@@ -10,7 +9,7 @@ const TodoForm = () => {
         const todo = {
             text: values.todosForm,
             todoStatus: 'todo',
-            completed: false
+            completed: false,
         };
         resetForm();
 
@@ -26,7 +25,12 @@ const TodoForm = () => {
         >
             <Form>
                 <label htmlFor='todosForm'>Enter Todo </label>
-                <Field id='todosForm' name='todosForm' placeholder='What to do today?...' className='form-control' />
+                <Field
+                    id='todosForm'
+                    name='todosForm'
+                    placeholder='What to do today?...'
+                    className='form-control'
+                />
                 <button type='submit'>Add</button>
             </Form>
         </Formik>
