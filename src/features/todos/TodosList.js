@@ -1,9 +1,8 @@
 import { useSelector } from 'react-redux';
-import { selectAllTodos } from './todosSlice';
-import { Droppable } from 'react-beautiful-dnd';
 import Loading from '../../components/Loading';
 import Todos from '../todos/Todos';
 import Error from '../../components/Error';
+import { selectAllTodos } from './todosSlice';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);
@@ -21,23 +20,11 @@ const TodosList = () => {
 
     if (todos && todos.length > 0) {
         return (
-            <Droppable droppableId='Todos'>
-                {(provided) => (
-                    <div
-                        innerRef={provided.innerRef}
-                        {...provided.droppableProps}
-                    >
-                        {todos.map((todo, index) => {
-                            return (
-                                <div key={todo.id} index={index} >
-                                    <Todos key={todo.id} todo={todo} />
-                                </div>
-                            );
-                        })}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
+            <div>
+                {todos.map((todo, index) => {
+                    return <Todos key={todo.id} todo={todo} index={index} />;
+                })}
+            </div>
         );
     }
 
