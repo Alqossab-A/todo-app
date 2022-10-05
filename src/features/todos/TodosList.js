@@ -20,11 +20,11 @@ const TodosList = () => {
 
     if (todos && todos.length > 0) {
         return (
-            <div>
+            <>
                 {todos.map((todo, index) => {
                     return <Todos key={todo.id} todo={todo} index={index} />;
                 })}
-            </div>
+            </>
         );
     }
 

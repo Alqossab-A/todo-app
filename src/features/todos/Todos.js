@@ -11,6 +11,7 @@ import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const Todos = (props) => {
+    const index = props.index
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
@@ -62,11 +63,11 @@ const Todos = (props) => {
     };
 
     return (
-        <Draggable key={todo.id} draggableId='todo' index={props.index}>
+        <Draggable key={todo.id} draggableId={id.toString()} index={index}>
             {(provided) => (
                 <div
                     className='todoContainer'
-                    index={props.index}
+                    index={index}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}

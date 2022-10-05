@@ -1,6 +1,6 @@
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import TodoForm from '../todos/TodosForm';
 import TodosList from '../todos/TodosList';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 
 const DisplayTodos = () => {
     const onDragEnd = (result) => {
