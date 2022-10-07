@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
+import { selectAllTodos } from './todosSlice';
 import Loading from '../../components/Loading';
 import Todos from '../todos/Todos';
 import Error from '../../components/Error';
-import { selectAllTodos } from './todosSlice';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);

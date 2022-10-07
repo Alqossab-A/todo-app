@@ -95,6 +95,21 @@ export const updateTodoComplete = createAsyncThunk(
     }
 );
 
+export const updateTodoPosition = createAsyncThunk(
+    'todos/updateTodoPosition',
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(todo),
+            headers: {'Content-Type':'application/json'}
+        })
+
+        if (!response.ok) {
+            return Promise.reject(response.status)
+        }
+    }
+);
+
 const initialState = {
     todosArray: [],
     isLoading: true,

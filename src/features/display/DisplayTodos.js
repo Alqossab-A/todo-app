@@ -1,10 +1,25 @@
 import TodoForm from '../todos/TodosForm';
 import TodosList from '../todos/TodosList';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { useDispatch } from 'react-redux';
 
 const DisplayTodos = () => {
+    const dispatch = useDispatch();
+
     const onDragEnd = (result) => {
-        ///TODO: reoder our Todolist
+        const { destination, source, draggableId } = result;
+
+        if (!destination) {
+            return;
+        }
+
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
     };
 
     return (
