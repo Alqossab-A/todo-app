@@ -3,9 +3,12 @@ import { selectAllTodos } from './todosSlice';
 import Loading from '../../components/Loading';
 import Todos from '../todos/Todos';
 import Error from '../../components/Error';
+import { useState } from 'react';
 
 const TodosList = () => {
     const todos = useSelector(selectAllTodos);
+
+    const [todosOrder, updateTodoaOrder] = useState(todos)
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
