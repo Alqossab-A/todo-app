@@ -1,12 +1,17 @@
 import TodoForm from '../todos/TodosForm';
 import TodosList from '../todos/TodosList';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { selectAllTodos } from '../todos/todosSlice';
 
 const DisplayTodos = () => {
     const dispatch = useDispatch();
 
+    const [todos, updateTodos] = useState(useSelector(selectAllTodos));
+
     const onDragEnd = (result) => {
+        console.log(result);
         const { destination, source, draggableId } = result;
 
         if (!destination) {
@@ -19,44 +24,11 @@ const DisplayTodos = () => {
         ) {
             return;
         }
+
+        if (!result.destination) return;
+
+        dispatch(moveTodo(result.source.index, result.destination.index));;
     };
-
-    /*Example
-
-    onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    const column = this.state.columns[source.droppableId];
-    const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
-
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds,
-    };
-
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        [newColumn.id]: newColumn,
-      },
-    };
-
-    this.setState(newState);
-  };*/
 
     return (
         <>

@@ -110,6 +110,22 @@ export const updateTodoPosition = createAsyncThunk(
     }
 );
 
+export const moveTodo = createAsyncThunk(
+    'todos/moveTodo',
+    async (sourceIndex, destinationIndex) {
+        dispatch => {
+          setTimeout(
+            () =>
+              dispatch({
+                type: MOVE,
+                payload: { sourceIndex, destinationIndex }
+              }),
+            1000
+          );
+        };
+      }
+)
+
 const initialState = {
     todosArray: [],
     isLoading: true,
