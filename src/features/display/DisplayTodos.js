@@ -1,5 +1,6 @@
 import TodoForm from '../todos/TodosForm';
 import TodosList from '../todos/TodosList';
+import { moveTodo } from '../todos/todosSlice';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -12,7 +13,7 @@ const DisplayTodos = () => {
 
     const onDragEnd = (result) => {
         console.log(result);
-        const { destination, source, draggableId } = result;
+        const { destination, source } = result;
 
         if (!destination) {
             return;

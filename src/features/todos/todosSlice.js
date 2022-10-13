@@ -2,6 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
+const reorder = (todos, startIndex, endIndex) => {
+    const result = Array.from(todos);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+  
+    return result;
+  };
+
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
     async () => {
@@ -110,20 +118,22 @@ export const updateTodoPosition = createAsyncThunk(
     }
 );
 
-export const moveTodo = createAsyncThunk(
+export const moveTodos = createAsyncThunk(
     'todos/moveTodo',
-    async (sourceIndex, destinationIndex) {
-        dispatch => {
-          setTimeout(
-            () =>
-              dispatch({
-                type: MOVE,
-                payload: { sourceIndex, destinationIndex }
-              }),
-            1000
-          );
-        };
-      }
+    async (todo, { dispatch }) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
+            method: 'MOVE',
+            body: JSON.stringify(todo),
+            headers: {'Content-Type':'application/json'}
+        })
+
+        if (!response.ok) {
+            return Promise.reject(response.status)
+        }
+
+        const data = await response.json();
+        dispatch(moveTodo(data))
+    }
 )
 
 const initialState = {
@@ -144,6 +154,19 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
+        moveTodo: (state, action) => {
+            console.log('moveTodo action.payload:', action.payload)
+            return {
+                ...state,
+                    todos: {
+                    todo: reorder(
+                        state.entity.todo,
+                        action.payload.sourceIndex,
+                        action.payload.destinationIndex
+                    )
+                }
+            };
+        }
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -182,4 +205,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, updateTodos } = todosSlice.actions;
+export const { addTodo, updateTodos, moveTodo } = todosSlice.actions;
