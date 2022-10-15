@@ -121,8 +121,8 @@ export const updateTodoPosition = createAsyncThunk(
 export const moveTodos = createAsyncThunk(
     'todos/moveTodo',
     async (todo, { dispatch }) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'MOVE',
+        const response = await fetch(baseUrl + `todos`, {
+            method: 'PUT',
             body: JSON.stringify(todo),
             headers: {'Content-Type':'application/json'}
         })
@@ -160,7 +160,7 @@ const todosSlice = createSlice({
                 ...state,
                     todos: {
                     todo: reorder(
-                        state.entity.todo,
+                        state.todosArray.todos,
                         action.payload.sourceIndex,
                         action.payload.destinationIndex
                     )
