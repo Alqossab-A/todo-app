@@ -1,13 +1,11 @@
+import DisplayFolders from '../features/display/DisplayFolders';
 import DisplayTodos from '../features/display/DisplayTodos';
 
-
 const HomePage = () => {
-
     return (
         <>
-
-                <DisplayTodos />
-
+            <DisplayFolders />
+            <DisplayTodos />
         </>
     );
 };
