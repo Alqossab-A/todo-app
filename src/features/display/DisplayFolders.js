@@ -1,4 +1,4 @@
-import FolderList from '../folders/folderList';
+import FolderList from '../folders/FolderList';
 
 const DisplayFolders = () => {
     return (

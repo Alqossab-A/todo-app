@@ -16,7 +16,7 @@ const TodosList = () => {
 
     const onDragEnd = (result) => {
         console.log(result);
-        const { destination, source, draggableId } = result;
+        const { destination, source } = result;
 
         if (!destination) {
             return;
@@ -46,7 +46,7 @@ const TodosList = () => {
         return (
             <>
                 <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId='Todoslist'>
+                    <Droppable droppableId='droppable'>
                         {(provided) => (
                             <div
                                 className='TodoListContainer'

@@ -2,17 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
-export const fetchTodos = createAsyncThunk(
-    'todos/fetchTodos',
-    async () => {
-        const response = await fetch(baseUrl + 'todos');
-        if (!response.ok) {
-            return Promise.reject('Unable to fetch, status:' + response.status);
-        }
-        const data = await response.json();
-        return data;
+export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
+    const response = await fetch(baseUrl + 'todos');
+    if (!response.ok) {
+        return Promise.reject('Unable to fetch, status:' + response.status);
     }
-);
+    const data = await response.json();
+    return data;
+});
 
 export const postTodo = createAsyncThunk(
     'todos/postTodo',
@@ -20,11 +17,11 @@ export const postTodo = createAsyncThunk(
         const response = await fetch(baseUrl + 'todos', {
             method: 'POST',
             body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'},
+            headers: { 'Content-Type': 'application/json' },
         });
 
         if (!response.ok) {
-            return Promise.reject(response.status)
+            return Promise.reject(response.status);
         }
 
         const data = await response.json();
@@ -32,38 +29,32 @@ export const postTodo = createAsyncThunk(
     }
 );
 
-export const deleteTodo = createAsyncThunk(
-    'todos/deleteTodo',
-    async (todo) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'DELETE',
-        });
+export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'DELETE',
+    });
 
-        if (!response.ok) {
-            return Promise.reject(response.status)
-        }
-
-        if (response.ok) {
-            return { id: todo.id }
-        }
+    if (!response.ok) {
+        return Promise.reject(response.status);
     }
-);
 
-export const updateTodo = createAsyncThunk(
-    'todos/updateTodo',
-    async (todo) => {
-        console.log('Update obj:',todo)
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
-
-        if (!response.ok) {
-            return Promise.reject(response.status)
-        }
+    if (response.ok) {
+        return { id: todo.id };
     }
-);
+});
+
+export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
+    console.log('Update obj:', todo);
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(todo),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+        return Promise.reject(response.status);
+    }
+});
 
 export const updateTodoStatus = createAsyncThunk(
     'todos/updateTodoStatus',
@@ -71,11 +62,11 @@ export const updateTodoStatus = createAsyncThunk(
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
             body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
+            headers: { 'Content-Type': 'application/json' },
+        });
 
         if (!response.ok) {
-            return Promise.reject(response.status)
+            return Promise.reject(response.status);
         }
     }
 );
@@ -86,11 +77,11 @@ export const updateTodoComplete = createAsyncThunk(
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
             body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
+            headers: { 'Content-Type': 'application/json' },
+        });
 
         if (!response.ok) {
-            return Promise.reject(response.status)
+            return Promise.reject(response.status);
         }
     }
 );
@@ -101,11 +92,11 @@ export const updateTodoPosition = createAsyncThunk(
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
             method: 'PUT',
             body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
+            headers: { 'Content-Type': 'application/json' },
+        });
 
         if (!response.ok) {
-            return Promise.reject(response.status)
+            return Promise.reject(response.status);
         }
     }
 );
@@ -116,22 +107,30 @@ export const sortTodos = createAsyncThunk(
         const response = await fetch(baseUrl + `todos`, {
             method: 'PUT',
             body: JSON.stringify(todo),
-            headers: {'Content-Type':'application/json'}
-        })
+            headers: { 'Content-Type': 'application/json' },
+        });
 
         if (!response.ok) {
-            return Promise.reject(response.status)
+            return Promise.reject(response.status);
         }
 
         const data = await response.json();
-        dispatch(sortTodo(data))
+        dispatch(sortTodo(data));
     }
-)
+);
 
 const initialState = {
     todosArray: [],
     isLoading: true,
     errMsg: '',
+};
+
+const reorder = (state, startIndex, endIndex) => {
+    console.log("todosArrary>>", ...state)
+    const result = Array.from(...state.todos.todosArray);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
 };
 
 const todosSlice = createSlice({
@@ -147,9 +146,21 @@ const todosSlice = createSlice({
             state.todosArray.push(newTodo);
         },
         sortTodo: (state, action) => {
-            console.log('sortTodo action.payload:', action.payload)
-            console.log('search:', action.payload.draggableId)
-        }
+            /*const Todoslist = state[action.payload.droppableIdStart];
+            console.log('action>>>',action.payload.destination)
+            const todo = Todoslist.todo.splice(action.payload.droppableIndexStart, 1);
+            Todoslist.todos.splice(action.payload.droppableIndexEnd, 0, ...todo);
+            return { ...state, [action.payload.droppableIdStart]: Todoslist };*/
+
+            return {
+                ...state,
+                todosArray: reorder(
+                    state.todosArray.todo,
+                    action.payload.sourceIndex,
+                    action.payload.destinationIndex
+                ),
+            };
+        },
     },
     extraReducers: {
         [fetchTodos.pending]: (state) => {
@@ -165,15 +176,17 @@ const todosSlice = createSlice({
             state.errMsg = action.error ? action.error.message : 'Fetch Failed';
         },
         [fetchTodos.rejected]: (state, action) => {
-            alert (
+            alert(
                 'Your todo could not be posted\nError: ' +
-                    (action.error ? action.error.message: 'Fetch failed')
+                    (action.error ? action.error.message : 'Fetch failed')
             );
         },
         [deleteTodo.fulfilled]: (state, action) => {
-            state.todosArray = state.todosArray.filter(todo => todo.id !== action.payload.id)
+            state.todosArray = state.todosArray.filter(
+                (todo) => todo.id !== action.payload.id
+            );
         },
-    }
+    },
 });
 
 export const selectAllTodos = (state) => {
@@ -181,9 +194,7 @@ export const selectAllTodos = (state) => {
 };
 
 export const selectTodosById = (id) => (state) => {
-    return state.todos.todosArray.find(
-        (todo) => todo.id === parseInt(id)
-    );
+    return state.todos.todosArray.find((todo) => todo.id === parseInt(id));
 };
 
 export const todoReducer = todosSlice.reducer;
