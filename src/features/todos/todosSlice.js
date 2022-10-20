@@ -116,6 +116,7 @@ export const sortTodos = createAsyncThunk(
 
         const data = await response.json();
         dispatch(sortTodo(data));
+        console.log(data)
     }
 );
 
@@ -125,13 +126,13 @@ const initialState = {
     errMsg: '',
 };
 
-const reorder = (state, startIndex, endIndex) => {
-    console.log("todosArrary>>", ...state)
-    const result = Array.from(...state.todos.todosArray);
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+  
     return result;
-};
+  };
 
 const todosSlice = createSlice({
     name: 'todos',
@@ -146,19 +147,13 @@ const todosSlice = createSlice({
             state.todosArray.push(newTodo);
         },
         sortTodo: (state, action) => {
-            /*const Todoslist = state[action.payload.droppableIdStart];
-            console.log('action>>>',action.payload.destination)
-            const todo = Todoslist.todo.splice(action.payload.droppableIndexStart, 1);
-            Todoslist.todos.splice(action.payload.droppableIndexEnd, 0, ...todo);
-            return { ...state, [action.payload.droppableIdStart]: Todoslist };*/
-
             return {
                 ...state,
                 todosArray: reorder(
                     state.todosArray.todo,
                     action.payload.sourceIndex,
                     action.payload.destinationIndex
-                ),
+                )
             };
         },
     },

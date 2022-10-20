@@ -31,7 +31,7 @@ const TodosList = () => {
 
         if (!result.destination) return;
 
-        dispatch(sortTodo(result));
+        dispatch(sortTodo(result.source.index, result.destination.index));
     };
 
     if (isLoading) {
