@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    background-color: lightslategray;
 }
 
 .todoTextArea {
@@ -18,4 +19,17 @@
     border: 0.5rem;
     border-radius: 0.8rem;
     box-shadow: 0.1rem 0.1rem 0.1rem grey;
+}
+
+.todoSpan {
+    color: white
+}
+
+.inProSpan {
+    color: white
+}
+
+
+.doneSpan {
+    color: white
 }

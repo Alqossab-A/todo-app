@@ -18,6 +18,7 @@ const Todos = (props) => {
     const [inputValue, setInputValue] = useState(text);
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
+
     const dispatch = useDispatch();
 
     const debouncedDispatch = useMemo(
