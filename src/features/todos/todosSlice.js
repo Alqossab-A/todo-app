@@ -44,7 +44,6 @@ export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
 });
 
 export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
-    console.log('Update obj:', todo);
     const response = await fetch(baseUrl + `todos/${todo.id}`, {
         method: 'PUT',
         body: JSON.stringify(todo),
@@ -171,7 +170,7 @@ const todosSlice = createSlice({
             state.isLoading = false;
             state.errMsg = action.error ? action.error.message : 'Fetch Failed';
         },
-        [fetchTodos.rejected]: (state, action) => {
+        [postTodo.rejected]: (action) => {
             alert(
                 'Your todo could not be posted\nError: ' +
                     (action.error ? action.error.message : 'Fetch failed')

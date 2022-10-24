@@ -1,6 +1,6 @@
 .App {
     text-align: center;
-    background-color: lightslategray;
+    background-color: lightslategrey;
 }
 
 .todoTextArea {
@@ -21,15 +21,63 @@
     box-shadow: 0.1rem 0.1rem 0.1rem grey;
 }
 
+.todoRadio {
+    display: none;
+}
+
+.inProRadio {
+    display: none;
+}
+
+.doneRadio {
+    display: none;
+}
+
+.todoRadio:checked + .todoSpan {
+    opacity: 100%;
+}
+
+.inProRadio:checked + .inProSpan {
+    opacity: 100%;
+}
+
+.doneRadio:checked + .doneSpan {
+    opacity: 100%;
+}
+
 .todoSpan {
-    color: white
+    color: white;
+    margin: 0.5rem;
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    border: 1px;
+    border-radius: 0.2rem;
+    background: lightblue;
+    opacity: 70%;
+    transition: background 0.1s;
 }
 
 .inProSpan {
-    color: white
+    color: white;
+    margin: 0.5rem;
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    border: 1px;
+    border-radius: 0.2rem;
+    background: lightgreen;
+    opacity: 70%;
+    transition: background 0.1s;
 }
 
 
 .doneSpan {
-    color: white
+    color: white;
+    margin: 0.5rem;
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    border: 1px;
+    border-radius: 0.2rem;
+    background: lightcoral;
+    opacity: 70%;
+    transition: background 0.1s;
 }
