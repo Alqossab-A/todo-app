@@ -87,25 +87,11 @@ export const updateTodoComplete = createAsyncThunk(
 
 export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
-    async (todo) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(todo),
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) {
-            return Promise.reject(response.status);
-        }
-    }
-);
-
-export const sortTodos = createAsyncThunk(
-    'todos/sortTodo',
-    async (todo, { dispatch }) => {
+    async (payload, { dispatch}) => {
+        console.log('payload:::', payload)
         const response = await fetch(baseUrl + `todos`, {
             method: 'PUT',
-            body: JSON.stringify(todo),
+            body: JSON.stringify(payload),
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -115,7 +101,6 @@ export const sortTodos = createAsyncThunk(
 
         const data = await response.json();
         dispatch(sortTodo(data));
-        console.log(data);
     }
 );
 
@@ -191,6 +176,12 @@ export const selectAllTodos = (state) => {
 export const selectTodosById = (id) => (state) => {
     return state.todos.todosArray.find((todo) => todo.id === parseInt(id));
 };
+
+export const moveItemAction = (sourceIndex, destinationIndex) => {
+    return dispatch => {
+        dispatch({ type: 'MOVE', payload: { sourceIndex, destinationIndex}})
+    }
+}
 
 export const todoReducer = todosSlice.reducer;
 

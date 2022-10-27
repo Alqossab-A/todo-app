@@ -21,15 +21,7 @@
     box-shadow: 0.1rem 0.1rem 0.1rem grey;
 }
 
-.todoRadio {
-    display: none;
-}
-
-.inProRadio {
-    display: none;
-}
-
-.doneRadio {
+input[type="radio"]{
     display: none;
 }
 
