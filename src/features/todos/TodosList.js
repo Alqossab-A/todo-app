@@ -1,4 +1,4 @@
-import { selectAllTodos, updateTodoPosition } from './todosSlice';
+import { selectAllTodos, sortTodo } from './todosSlice';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/Loading';
@@ -30,7 +30,7 @@ const TodosList = () => {
 
         if (!result.destination) return;
 
-        dispatch(updateTodoPosition(source, destination));
+        dispatch(sortTodo(result));
     };
 
     if (isLoading) {

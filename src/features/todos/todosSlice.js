@@ -2,14 +2,19 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
-export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
-    const response = await fetch(baseUrl + 'todos');
-    if (!response.ok) {
-        return Promise.reject('Unable to fetch, status:' + response.status);
+export const fetchTodos = createAsyncThunk(
+    'todos/fetchTodos',
+    async () => {
+        const response = await fetch(baseUrl + 'todos');
+
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status:' + response.status);
+        }
+
+        const data = await response.json();
+        return data;
     }
-    const data = await response.json();
-    return data;
-});
+);
 
 export const postTodo = createAsyncThunk(
     'todos/postTodo',
@@ -29,31 +34,37 @@ export const postTodo = createAsyncThunk(
     }
 );
 
-export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
-    const response = await fetch(baseUrl + `todos/${todo.id}`, {
-        method: 'DELETE',
-    });
+export const deleteTodo = createAsyncThunk(
+    'todos/deleteTodo',
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
+            method: 'DELETE',
+        });
 
-    if (!response.ok) {
-        return Promise.reject(response.status);
+        if (!response.ok) {
+            return Promise.reject(response.status);
+        }
+
+        if (response.ok) {
+            return { id: todo.id };
+        }
     }
+);
 
-    if (response.ok) {
-        return { id: todo.id };
+export const updateTodo = createAsyncThunk(
+    'todos/updateTodo',
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status);
+        }
     }
-});
-
-export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
-    const response = await fetch(baseUrl + `todos/${todo.id}`, {
-        method: 'PUT',
-        body: JSON.stringify(todo),
-        headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (!response.ok) {
-        return Promise.reject(response.status);
-    }
-});
+);
 
 export const updateTodoStatus = createAsyncThunk(
     'todos/updateTodoStatus',
@@ -87,8 +98,12 @@ export const updateTodoComplete = createAsyncThunk(
 
 export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
-    async (payload, { dispatch}) => {
-        console.log('payload:::', payload)
+    async (payload, { dispatch }) => {
+        console.log(
+            'payload:',
+            payload.source.index,
+            payload.destination.index
+        );
         const response = await fetch(baseUrl + `todos`, {
             method: 'PUT',
             body: JSON.stringify(payload),
@@ -110,11 +125,11 @@ const initialState = {
     errMsg: '',
 };
 
-const reorder = (todos, startIndex, endIndex) => {
-    console.log('todos>',todos);
-    const result = Array.from(todos);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+const reorder = (todo, source, destination) => {
+    console.log('todos>', todo);
+    const result = Array.from(todo);
+    const [removed] = result.splice(source.index, 1);
+    result.splice(destination.index, 0, removed);
 
     return result;
 };
@@ -134,11 +149,13 @@ const todosSlice = createSlice({
         sortTodo: (state, action) => {
             return {
                 ...state,
-                todosArray: reorder(
-                    state.todosArray.todo,
-                    action.payload.sourceIndex,
-                    action.payload.destinationIndex
-                ),
+                todosArray: {
+                    todo: reorder(
+                        state.todosArray,
+                        action.payload.source.index,
+                        action.payload.destination.index
+                    ),
+                },
             };
         },
     },
@@ -178,10 +195,10 @@ export const selectTodosById = (id) => (state) => {
 };
 
 export const moveItemAction = (sourceIndex, destinationIndex) => {
-    return dispatch => {
-        dispatch({ type: 'MOVE', payload: { sourceIndex, destinationIndex}})
-    }
-}
+    return (dispatch) => {
+        dispatch({ type: 'MOVE', payload: { sourceIndex, destinationIndex } });
+    };
+};
 
 export const todoReducer = todosSlice.reducer;
 
