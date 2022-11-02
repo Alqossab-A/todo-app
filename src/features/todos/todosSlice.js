@@ -101,8 +101,7 @@ export const updateTodoPosition = createAsyncThunk(
     async (payload, { dispatch }) => {
         console.log(
             'payload:',
-            payload.source.index,
-            payload.destination.index
+            payload
         );
         const response = await fetch(baseUrl + `todos`, {
             method: 'PUT',
@@ -125,11 +124,11 @@ const initialState = {
     errMsg: '',
 };
 
-const reorder = (todo, source, destination) => {
-    console.log('todos>', todo);
-    const result = Array.from(todo);
-    const [removed] = result.splice(source.index, 1);
-    result.splice(destination.index, 0, removed);
+const reorder = (todosArray, startIndex, endIndex) => {
+    console.log('todos>', todosArray);
+    const result = Array.from(todosArray);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
 
     return result;
 };
@@ -146,16 +145,17 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        sortTodo: (state, action) => {
+        sortTodo: (state, action ,payload) => {
+            console.log("payload sort", payload);
             return {
                 ...state,
-                todosArray: {
-                    todo: reorder(
-                        state.todosArray,
-                        action.payload.source.index,
-                        action.payload.destination.index
-                    ),
-                },
+                    todosArray: {
+                        todos: reorder(
+                            state.todosArray,
+                            action.payload.source.index,
+                            action.payload.destination.index
+                        ),
+                    }
             };
         },
     },
@@ -192,12 +192,6 @@ export const selectAllTodos = (state) => {
 
 export const selectTodosById = (id) => (state) => {
     return state.todos.todosArray.find((todo) => todo.id === parseInt(id));
-};
-
-export const moveItemAction = (sourceIndex, destinationIndex) => {
-    return (dispatch) => {
-        dispatch({ type: 'MOVE', payload: { sourceIndex, destinationIndex } });
-    };
 };
 
 export const todoReducer = todosSlice.reducer;
