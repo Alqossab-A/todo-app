@@ -125,12 +125,31 @@ const initialState = {
 };
 
 const reorder = (todosArray, startIndex, endIndex) => {
-    console.log('todos>', todosArray);
-    const result = Array.from(todosArray);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    // console.log('todos>', todosArray);
+    // const result = Array.from(todosArray);
+    // const [removed] = result.splice(startIndex, 1);
+    // result.splice(endIndex, 0, removed);
 
-    return result;
+    // return result;
+
+    // if (droppableIdStart === droppableIdEnd) {
+    //     const list = state[droppableIdStart];
+    //     const card = list.cards.splice(droppableIndexStart, 1);
+    //     list.cards.splice(droppableIndexEnd, 0, ...card);
+    //     return { ...state, [droppableIdStart]: list };
+    //   }
+
+    // case CONSTANTS.DRAG_HAPPENED: {
+    //     const { boardID } = action.payload;
+    //     const board = state[boardID];
+    //     const lists = board.lists;
+    //     const {
+    //       droppableIndexEnd,
+    //       droppableIndexStart,
+  
+    //       type
+    //     } = action.payload;
+    // }
 };
 
 const todosSlice = createSlice({

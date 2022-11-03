@@ -28,7 +28,7 @@ const Todos = (props) => {
 
     const handleChange = (e) => {
         setInputValue(e.target.value); //updates your component state
-        let obj = {
+        let obj = { // create an object for dispatch
             text: e.target.value,
             todoStatus: status,
             completed: checked,
