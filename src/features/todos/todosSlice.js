@@ -164,18 +164,8 @@ const todosSlice = createSlice({
             };
             state.todosArray.push(newTodo);
         },
-        sortTodo: (state, action ,payload) => {
-            console.log("payload sort", payload);
-            return {
-                ...state,
-                    todosArray: {
-                        todos: reorder(
-                            state.todosArray,
-                            action.payload.source.index,
-                            action.payload.destination.index
-                        ),
-                    }
-            };
+        sortTodo: (state, action) => {
+            return (state = action.payload)
         },
     },
     extraReducers: {

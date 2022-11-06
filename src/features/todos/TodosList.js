@@ -21,16 +21,11 @@ const TodosList = () => {
             return;
         }
 
-        if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return;
-        }
+        const newTodos = Array.from(todos)
+        const [reorderedItem] = newTodos.splice(source.index, 1)
+        newTodos.splice(destination.index, 0, reorderedItem)
 
-        if (!result.destination) return;
-
-        dispatch(sortTodo(result.source.index, result.destination));
+        dispatch(sortTodo(newTodos));
     };
 
     if (isLoading) {
