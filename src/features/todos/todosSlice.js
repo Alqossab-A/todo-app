@@ -165,7 +165,7 @@ const todosSlice = createSlice({
             state.todosArray.push(newTodo);
         },
         sortTodo: (state, action) => {
-            return (state = action.payload)
+            state.todosArray = action.payload
         },
     },
     extraReducers: {
