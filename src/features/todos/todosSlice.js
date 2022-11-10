@@ -2,19 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
-export const fetchTodos = createAsyncThunk(
-    'todos/fetchTodos',
-    async () => {
-        const response = await fetch(baseUrl + 'todos');
+export const fetchTodos = createAsyncThunk('todos/fetchTodos', async () => {
+    const response = await fetch(baseUrl + 'todos');
 
-        if (!response.ok) {
-            return Promise.reject('Unable to fetch, status:' + response.status);
-        }
-
-        const data = await response.json();
-        return data;
+    if (!response.ok) {
+        return Promise.reject('Unable to fetch, status:' + response.status);
     }
-);
+
+    const data = await response.json();
+    return data;
+});
 
 export const postTodo = createAsyncThunk(
     'todos/postTodo',
@@ -34,37 +31,31 @@ export const postTodo = createAsyncThunk(
     }
 );
 
-export const deleteTodo = createAsyncThunk(
-    'todos/deleteTodo',
-    async (todo) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'DELETE',
-        });
+export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'DELETE',
+    });
 
-        if (!response.ok) {
-            return Promise.reject(response.status);
-        }
-
-        if (response.ok) {
-            return { id: todo.id };
-        }
+    if (!response.ok) {
+        return Promise.reject(response.status);
     }
-);
 
-export const updateTodo = createAsyncThunk(
-    'todos/updateTodo',
-    async (todo) => {
-        const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(todo),
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) {
-            return Promise.reject(response.status);
-        }
+    if (response.ok) {
+        return { id: todo.id };
     }
-);
+});
+
+export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(todo),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+        return Promise.reject(response.status);
+    }
+});
 
 export const updateTodoStatus = createAsyncThunk(
     'todos/updateTodoStatus',
@@ -98,14 +89,11 @@ export const updateTodoComplete = createAsyncThunk(
 
 export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
-    async (payload, { dispatch }) => {
-        console.log(
-            'payload:',
-            payload
-        );
-        const response = await fetch(baseUrl + `todos`, {
-            method: 'PUT',
-            body: JSON.stringify(payload),
+    async (todos, { dispatch }) => {
+        console.log('todos:', todos);
+        const response = await fetch(baseUrl + 'todos', {
+            method: 'POST',
+            body: JSON.stringify(todos),
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -124,34 +112,6 @@ const initialState = {
     errMsg: '',
 };
 
-const reorder = (todosArray, startIndex, endIndex) => {
-    // console.log('todos>', todosArray);
-    // const result = Array.from(todosArray);
-    // const [removed] = result.splice(startIndex, 1);
-    // result.splice(endIndex, 0, removed);
-
-    // return result;
-
-    // if (droppableIdStart === droppableIdEnd) {
-    //     const list = state[droppableIdStart];
-    //     const card = list.cards.splice(droppableIndexStart, 1);
-    //     list.cards.splice(droppableIndexEnd, 0, ...card);
-    //     return { ...state, [droppableIdStart]: list };
-    //   }
-
-    // case CONSTANTS.DRAG_HAPPENED: {
-    //     const { boardID } = action.payload;
-    //     const board = state[boardID];
-    //     const lists = board.lists;
-    //     const {
-    //       droppableIndexEnd,
-    //       droppableIndexStart,
-  
-    //       type
-    //     } = action.payload;
-    // }
-};
-
 const todosSlice = createSlice({
     name: 'todos',
     initialState,
@@ -165,7 +125,8 @@ const todosSlice = createSlice({
             state.todosArray.push(newTodo);
         },
         sortTodo: (state, action) => {
-            state.todosArray = action.payload
+            console.log('sortTodo action.payload:', action.payload);
+            state.todosArray = action.payload;
         },
     },
     extraReducers: {

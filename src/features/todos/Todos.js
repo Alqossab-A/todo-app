@@ -64,7 +64,7 @@ const Todos = (props) => {
     };
 
     return (
-        <Draggable key={todo.id} draggableId={String(id)} index={index}>
+        <Draggable key={String(id)} draggableId={String(id)} index={index}>
             {(provided) => (
                 <div
                     className='todoContainer'
