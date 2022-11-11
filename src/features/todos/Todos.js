@@ -28,21 +28,17 @@ const Todos = (props) => {
 
     const handleChange = (e) => {
         setInputValue(e.target.value); //updates your component state
-        let obj = { // create an object for dispatch
+        let obj = {
             text: e.target.value,
-            todoStatus: status,
-            completed: checked,
-            id: id,
-        };
+            id: id
+        }
         debouncedDispatch(obj);
     };
 
     const HandleStatusChange = (e) => {
         setStatus(e.target.value);
         let statusObj = {
-            text: inputValue,
             todoStatus: e.target.value,
-            completed: checked,
             id: id,
         };
         dispatch(updateTodoStatus(statusObj));
@@ -51,8 +47,6 @@ const Todos = (props) => {
     const HandleCompletion = () => {
         setChecked(!checked);
         let checkedObj = {
-            text: inputValue,
-            todoStatus: status,
             completed: !checked,
             id: id,
         };

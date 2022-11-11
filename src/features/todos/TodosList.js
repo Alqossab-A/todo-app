@@ -15,18 +15,17 @@ const TodosList = () => {
     const errMsg = useSelector((state) => state.todos.errMsg);
 
     const onDragEnd = (result) => {
-        console.log(result);
         const { destination, source } = result;
 
-        if (!destination) {
-            return;
-        }
+        if (!destination) return;
+
+        if (destination.index === source.index) return;
 
         const newTodos = Array.from(todos)
         const [reorderedItem] = newTodos.splice(source.index, 1)
         newTodos.splice(destination.index, 0, reorderedItem)
 
-        dispatch(updateTodoPosition(newTodos));
+        dispatch(sortTodo(newTodos));
     };
 
 

@@ -46,8 +46,9 @@ export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
 });
 
 export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
+    console.log('patch test',todo)
     const response = await fetch(baseUrl + `todos/${todo.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(todo),
         headers: { 'Content-Type': 'application/json' },
     });
@@ -61,7 +62,7 @@ export const updateTodoStatus = createAsyncThunk(
     'todos/updateTodoStatus',
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json' },
         });
@@ -76,7 +77,7 @@ export const updateTodoComplete = createAsyncThunk(
     'todos/updateTodoComplete',
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json' },
         });
@@ -89,11 +90,11 @@ export const updateTodoComplete = createAsyncThunk(
 
 export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
-    async (todos, { dispatch }) => {
-        console.log('todos:', todos);
-        const response = await fetch(baseUrl + 'todos', {
-            method: 'POST',
-            body: JSON.stringify(todos),
+    async (todosArray, { dispatch }) => {
+        console.log('todos:', todosArray);
+        const response = await fetch(baseUrl + `todos${todosArray}`, {
+            method: 'PUT',
+            body: JSON.stringify(todosArray),
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -102,7 +103,7 @@ export const updateTodoPosition = createAsyncThunk(
         }
 
         const data = await response.json();
-        dispatch(sortTodo(data));
+        dispatch(sortTodo(data))
     }
 );
 
@@ -126,7 +127,7 @@ const todosSlice = createSlice({
         },
         sortTodo: (state, action) => {
             console.log('sortTodo action.payload:', action.payload);
-            state.todosArray = action.payload;
+            state.todosArray = action.payload
         },
     },
     extraReducers: {
