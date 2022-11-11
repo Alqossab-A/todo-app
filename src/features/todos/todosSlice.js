@@ -46,9 +46,8 @@ export const deleteTodo = createAsyncThunk('todos/deleteTodo', async (todo) => {
 });
 
 export const updateTodo = createAsyncThunk('todos/updateTodo', async (todo) => {
-    console.log('patch test',todo)
     const response = await fetch(baseUrl + `todos/${todo.id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         body: JSON.stringify(todo),
         headers: { 'Content-Type': 'application/json' },
     });
@@ -62,7 +61,7 @@ export const updateTodoStatus = createAsyncThunk(
     'todos/updateTodoStatus',
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json' },
         });
@@ -77,7 +76,7 @@ export const updateTodoComplete = createAsyncThunk(
     'todos/updateTodoComplete',
     async (todo) => {
         const response = await fetch(baseUrl + `todos/${todo.id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json' },
         });
