@@ -15,9 +15,16 @@ const Todos = (props) => {
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
-    const [inputValue, setInputValue] = useState(text);
+    const [inputValue, setInputValue] = useState(text); //updates your component state
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
+
+    let baseTodo = { //obj being sent
+        text: inputValue,
+        todoStatus: status,
+        completed: checked,
+        id: id,
+    };
 
     const dispatch = useDispatch();
 
@@ -27,36 +34,21 @@ const Todos = (props) => {
     );
 
     const handleChange = (e) => {
-        setInputValue(e.target.value); //updates your component state
-        let obj = { // create an object for dispatch
-            text: e.target.value,
-            todoStatus: status,
-            completed: checked,
-            id: id,
-        };
-        debouncedDispatch(obj);
+        setInputValue(e.target.value);
+        baseTodo.text = e.target.value;
+        debouncedDispatch(baseTodo);
     };
 
     const HandleStatusChange = (e) => {
         setStatus(e.target.value);
-        let statusObj = {
-            text: inputValue,
-            todoStatus: e.target.value,
-            completed: checked,
-            id: id,
-        };
-        dispatch(updateTodoStatus(statusObj));
+        baseTodo.todoStatus = e.target.value;
+        dispatch(updateTodoStatus(baseTodo));
     };
 
     const HandleCompletion = () => {
         setChecked(!checked);
-        let checkedObj = {
-            text: inputValue,
-            todoStatus: status,
-            completed: !checked,
-            id: id,
-        };
-        dispatch(updateTodoComplete(checkedObj));
+        baseTodo.completed = !checked;
+        dispatch(updateTodoComplete(baseTodo));
     };
 
     const HandleDelete = () => {

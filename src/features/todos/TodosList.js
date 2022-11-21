@@ -14,18 +14,19 @@ const TodosList = () => {
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
 
-    const onDragEnd = (result) => {
+    const onDragEnd = async (result) => {
         const { destination, source } = result;
 
         if (!destination) return;
 
         if (destination.index === source.index) return;
 
-        const newTodos = Array.from(todos)
-        const [reorderedItem] = newTodos.splice(source.index, 1)
-        newTodos.splice(destination.index, 0, reorderedItem)
+        const toBeMoved = todos[source.index]
+        const newOrder = [...todos]
+        newOrder.splice(source.index, 1)
+        newOrder.splice(destination.index, 0, toBeMoved)
 
-        dispatch(sortTodo(newTodos));
+        dispatch(updateTodoPosition(newOrder));
     };
 
 

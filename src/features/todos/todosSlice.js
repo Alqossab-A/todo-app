@@ -90,8 +90,8 @@ export const updateTodoComplete = createAsyncThunk(
 export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
     async (todosArray, { dispatch }) => {
-        console.log('todos:', todosArray);
-        const response = await fetch(baseUrl + `todos${todosArray}`, {
+        console.log('updatetodosPos:', todosArray);
+        const response = await fetch(baseUrl + `todos`, {
             method: 'PUT',
             body: JSON.stringify(todosArray),
             headers: { 'Content-Type': 'application/json' },
@@ -126,7 +126,7 @@ const todosSlice = createSlice({
         },
         sortTodo: (state, action) => {
             console.log('sortTodo action.payload:', action.payload);
-            state.todosArray = action.payload
+            state.todosArray = action.payload;
         },
     },
     extraReducers: {
