@@ -19,14 +19,14 @@ const Todos = (props) => {
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
 
+    const dispatch = useDispatch();
+
     let baseTodo = { //obj being sent
         text: inputValue,
         todoStatus: status,
         completed: checked,
         id: id,
     };
-
-    const dispatch = useDispatch();
 
     const debouncedDispatch = useMemo(
         () => debounce((obj) => dispatch(updateTodo(obj)), 750),

@@ -91,7 +91,7 @@ export const updateTodoPosition = createAsyncThunk(
     'todos/updateTodoPosition',
     async (todosArray, { dispatch }) => {
         console.log('updatetodosPos:', todosArray);
-        const response = await fetch(baseUrl + `todos`, {
+        const response = await fetch(baseUrl, {
             method: 'PUT',
             body: JSON.stringify(todosArray),
             headers: { 'Content-Type': 'application/json' },
