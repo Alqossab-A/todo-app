@@ -1,7 +1,84 @@
-const SubTodos = () => {
-    //TODO: split map method in todolist into also mapping subtodos within on array (if possible);
-    <>
-    </>
+import React, { useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { Draggable } from '@hello-pangea/dnd';
+import {
+    deleteSubTodo,
+    updateSubTodo,
+    updateSubTodoDone,
+} from './todosSlice';
+
+import debounce from 'lodash.debounce';
+import TextareaAutosize from 'react-textarea-autosize';
+
+
+const SubTodos = (props) => {
+    const index = props.index;
+    const todo = props.todo;
+    const { id, subText, done} = todo;
+
+    const [inputValue, setInputValue] = useState(subText); //updates your component state
+    const [checked, setChecked] = useState(done);
+
+    const dispatch = useDispatch();
+
+    let baseSubTodo = { //obj being sent
+        subText: inputValue,
+        done: checked,
+        id: id,
+    };
+
+    const debouncedDispatch = useMemo(
+        () => debounce((obj) => dispatch(updateSubTodo(obj)), 750),
+        [dispatch]
+    );
+
+    const handleChange = (e) => {
+        setInputValue(e.target.value);
+        baseSubTodo.subText = e.target.value;
+        debouncedDispatch(baseSubTodo);
+    };
+
+    const HandleCompletion = () => {
+        setChecked(!checked);
+        baseSubTodo.done = !checked;
+        dispatch(updateSubTodoDone(baseSubTodo));
+    };
+
+    const HandleDelete = () => {
+        dispatch(deleteSubTodo(todo));
+    };
+
+    return (
+        <Draggable key={String(id)} draggableId={String(id)} index={index}>
+            {(provided) => (
+                <div
+                    className='todoContainer'
+                    index={index}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                >
+                    <input
+                        type='checkbox'
+                        key={id}
+                        name={`completed${id}`}
+                        checked={checked}
+                        onChange={HandleCompletion}
+                    />
+                    <TextareaAutosize
+                        className='todoTextArea'
+                        maxLength={100}
+                        minRows={1}
+                        type='text'
+                        id={id}
+                        value={inputValue}
+                        onChange={handleChange}
+                    />
+                    <button onClick={HandleDelete}>-</button>
+                </div>
+            )}
+        </Draggable>
+    );
 };
 
 export default SubTodos;

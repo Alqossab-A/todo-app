@@ -106,6 +106,71 @@ export const updateTodoPosition = createAsyncThunk(
     }
 );
 
+
+////////////////////////////////////////
+//                                    //
+//         SUB TODO Calls             //
+//                                    //
+////////////////////////////////////////
+export const postSubTodo = createAsyncThunk(
+    'todos/postSubTodo',
+    async (todo, { dispatch }) => {
+        const response = await fetch(baseUrl + 'todos', {
+            method: 'POST',
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status);
+        }
+
+        const data = await response.json();
+        dispatch(addSubTodo(data));
+    }
+);
+
+export const updateSubTodo = createAsyncThunk('todos/updateSubTodo', async (todo) => {
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(todo),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    
+    if (!response.ok) {
+        return Promise.reject(response.status);
+    }
+});
+
+export const deleteSubTodo = createAsyncThunk('todos/deleteSubTodo', async (todo) => {
+    const response = await fetch(baseUrl + `todos/${todo.id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        return Promise.reject(response.status);
+    }
+
+    if (response.ok) {
+        return { id: todo.id };
+    }
+});
+
+export const updateSubTodoDone = createAsyncThunk(
+    'todos/updateSubTodoDone',
+    async (todo) => {
+        const response = await fetch(baseUrl + `todos/${todo.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status);
+        }
+    }
+);
+
 const initialState = {
     todosArray: [],
     isLoading: true,
@@ -127,6 +192,16 @@ const todosSlice = createSlice({
         sortTodo: (state, action) => {
             console.log('sortTodo action.payload:', action.payload);
             state.todosArray = action.payload;
+        },
+
+        //////SUB TODO Reducers//////
+        addSubTodo: (state, action) => {
+            console.log('addSubTodo action.payload:', action.payload);
+            const newSubTodo = {
+                subId: state.todosArray.length + 1,
+                ...action.payload,
+            };
+            state.todosArray.push(newSubTodo);
         },
     },
     extraReducers: {
@@ -153,6 +228,19 @@ const todosSlice = createSlice({
                 (todo) => todo.id !== action.payload.id
             );
         },
+        //////SUB TODO extraReducers//////
+
+        [postSubTodo.rejected]: (action) => {
+            alert(
+                'Your todo could not be posted\nError: ' +
+                    (action.error ? action.error.message : 'Fetch failed')
+            );
+        },
+        [deleteSubTodo.fulfilled]: (state, action) => {
+            state.todosArray = state.todosArray.filter(
+                (todo) => todo.id !== action.payload.id
+            );
+        },
     },
 });
 
@@ -166,4 +254,4 @@ export const selectTodosById = (id) => (state) => {
 
 export const todoReducer = todosSlice.reducer;
 
-export const { addTodo, updateTodos, sortTodo } = todosSlice.actions;
+export const { addTodo, updateTodos, sortTodo, addSubTodo } = todosSlice.actions;
