@@ -16,13 +16,16 @@ const Todos = (props) => {
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
+    console.log('main', index);
+
     const [inputValue, setInputValue] = useState(text); //updates your component state
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
 
     const dispatch = useDispatch();
 
-    let baseTodo = { //obj being sent
+    let baseTodo = {
+        //obj being sent
         text: inputValue,
         todoStatus: status,
         completed: checked,
@@ -57,74 +60,64 @@ const Todos = (props) => {
     };
 
     return (
-        <Draggable key={String(id)} draggableId={String(id)} index={index}>
-            {(provided) => (
-                <div
-                    className='todoContainer'
-                    index={index}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                >
-                    <input
-                        type='checkbox'
-                        key={id}
-                        name={`completed${id}`}
-                        checked={checked}
-                        onChange={HandleCompletion}
-                    />
-                    <TextareaAutosize
-                        className='todoTextArea'
-                        maxLength={100}
-                        minRows={1}
-                        type='text'
-                        id={id}
-                        value={inputValue}
-                        onChange={handleChange}
-                    />
-                    <button onClick={HandleDelete}>-</button>
+        <div className='todoContainer'>
+            <input
+                type='checkbox'
+                key={id}
+                name={`completed${id}`}
+                checked={checked}
+                onChange={HandleCompletion}
+            />
+            <TextareaAutosize
+                className='todoTextArea'
+                maxLength={100}
+                minRows={1}
+                type='text'
+                id={id}
+                value={inputValue}
+                onChange={handleChange}
+            />
+            <button onClick={HandleDelete}>-</button>
 
-                    <div className='todoInputs'>
-                        <label>
-                            <input
-                                className='todoRadio'
-                                type='radio'
-                                name={`radio${id}`}
-                                key={`todo${id}`}
-                                value='todo'
-                                checked={status === 'todo'}
-                                onChange={HandleStatusChange}
-                            />
-                            <span className='todoSpan'>Todo</span>
-                        </label>
-                        <label>
-                            <input
-                                className='inProRadio'
-                                type='radio'
-                                name={`radio${id}`}
-                                key={`inPro${id}`}
-                                value='inPro'
-                                checked={status === 'inPro'}
-                                onChange={HandleStatusChange}
-                            />
-                            <span className='inProSpan'>In Progress</span>
-                        </label>
-                        <label>
-                            <input
-                                className='doneRadio'
-                                type='radio'
-                                name={`radio${id}`}
-                                key={`done${id}`}
-                                value='done'
-                                checked={status === 'done'}
-                                onChange={HandleStatusChange}
-                            />
-                            <span className='doneSpan'>Done</span>
-                        </label>
-                    </div>
-                </div>
-            )}
-        </Draggable>
+            <div className='todoInputs'>
+                <label>
+                    <input
+                        className='todoRadio'
+                        type='radio'
+                        name={`radio${id}`}
+                        key={`todo${id}`}
+                        value='todo'
+                        checked={status === 'todo'}
+                        onChange={HandleStatusChange}
+                    />
+                    <span className='todoSpan'>Todo</span>
+                </label>
+                <label>
+                    <input
+                        className='inProRadio'
+                        type='radio'
+                        name={`radio${id}`}
+                        key={`inPro${id}`}
+                        value='inPro'
+                        checked={status === 'inPro'}
+                        onChange={HandleStatusChange}
+                    />
+                    <span className='inProSpan'>In Progress</span>
+                </label>
+                <label>
+                    <input
+                        className='doneRadio'
+                        type='radio'
+                        name={`radio${id}`}
+                        key={`done${id}`}
+                        value='done'
+                        checked={status === 'done'}
+                        onChange={HandleStatusChange}
+                    />
+                    <span className='doneSpan'>Done</span>
+                </label>
+            </div>
+        </div>
     );
 };
 

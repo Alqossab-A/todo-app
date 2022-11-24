@@ -1,27 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Draggable } from '@hello-pangea/dnd';
-import {
-    deleteSubTodo,
-    updateSubTodo,
-    updateSubTodoDone,
-} from './todosSlice';
+import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from './todosSlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
-
 const SubTodos = (props) => {
     const index = props.index;
     const todo = props.todo;
-    const { id, subText, done} = todo;
+    const { id, subText, done } = todo;
+
+    console.log('sub', index);
 
     const [inputValue, setInputValue] = useState(subText); //updates your component state
     const [checked, setChecked] = useState(done);
 
     const dispatch = useDispatch();
 
-    let baseSubTodo = { //obj being sent
+    let baseSubTodo = {
+        //obj being sent
         subText: inputValue,
         done: checked,
         id: id,
@@ -49,35 +47,25 @@ const SubTodos = (props) => {
     };
 
     return (
-        <Draggable key={String(id)} draggableId={String(id)} index={index}>
-            {(provided) => (
-                <div
-                    className='todoContainer'
-                    index={index}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                >
-                    <input
-                        type='checkbox'
-                        key={id}
-                        name={`completed${id}`}
-                        checked={checked}
-                        onChange={HandleCompletion}
-                    />
-                    <TextareaAutosize
-                        className='todoTextArea'
-                        maxLength={100}
-                        minRows={1}
-                        type='text'
-                        id={id}
-                        value={inputValue}
-                        onChange={handleChange}
-                    />
-                    <button onClick={HandleDelete}>-</button>
-                </div>
-            )}
-        </Draggable>
+        <div className='todoContainer'>
+            <input
+                type='checkbox'
+                key={id}
+                name={`completed${id}`}
+                checked={checked}
+                onChange={HandleCompletion}
+            />
+            <TextareaAutosize
+                className='todoTextArea'
+                maxLength={100}
+                minRows={1}
+                type='text'
+                id={id}
+                value={inputValue}
+                onChange={handleChange}
+            />
+            <button onClick={HandleDelete}>-</button>
+        </div>
     );
 };
 
