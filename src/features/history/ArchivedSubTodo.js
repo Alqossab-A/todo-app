@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from './todosSlice';
+import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from '../todos/todosSlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
-const SubTodos = (props) => {
-    const index = props.index;
+const ArchivedSubTodo = (props) => {
     const todo = props.todo;
     const { id, subText, done } = todo;
 
@@ -22,17 +21,6 @@ const SubTodos = (props) => {
         id: id,
     };
 
-    const debouncedDispatch = useMemo(
-        () => debounce((obj) => dispatch(updateSubTodo(obj)), 750),
-        [dispatch]
-    );
-
-    const handleChange = (e) => {
-        setInputValue(e.target.value);
-        baseSubTodo.subText = e.target.value;
-        debouncedDispatch(baseSubTodo);
-    };
-
     const HandleCompletion = () => {
         setChecked(!checked);
         baseSubTodo.done = !checked;
@@ -43,7 +31,7 @@ const SubTodos = (props) => {
         dispatch(deleteSubTodo(todo));
     };
 
-    if (checked === false)
+    if (checked === true)
         return (
             <div className='todoContainer'>
                 <input
@@ -60,11 +48,10 @@ const SubTodos = (props) => {
                     type='text'
                     id={id}
                     value={inputValue}
-                    onChange={handleChange}
                 />
                 <button onClick={HandleDelete}>-</button>
             </div>
         );
 };
 
-export default SubTodos;
+export default ArchivedSubTodo;

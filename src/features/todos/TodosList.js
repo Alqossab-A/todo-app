@@ -24,7 +24,7 @@ const TodosList = () => {
         return <Error errMsg={errMsg} />;
     }
 
-    if (todos && todos.length > 0) {
+    if (todos && todos.length >= 0) {
         return (
             <>
                 <TodoForm />

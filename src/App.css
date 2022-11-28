@@ -72,3 +72,15 @@ input[type="radio"]{
     opacity: 70%;
     transition: background 0.1s;
 }
+
+.formLabel {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.subFormLabel {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-right: 0.5rem;
+}

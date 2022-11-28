@@ -23,11 +23,11 @@ const SubTodoForm = () => {
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='subTodosForm'>Enter SubTodo </label>
+                <label htmlFor='subTodosForm' className='subFormLabel'>Would like to do</label>
                 <Field
                     id='subTodosForm'
                     name='subTodosForm'
-                    placeholder='Sub Todos for today..'
+                    placeholder='Can pass to tomorrow'
                     className='form-control'
                 />
                 <button type='submit'>Add</button>

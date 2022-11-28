@@ -24,11 +24,11 @@ const TodoForm = () => {
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='todosForm'>Enter Todo </label>
+                <label htmlFor='todosForm' className='formLabel'>Must be done</label>
                 <Field
                     id='todosForm'
                     name='todosForm'
-                    placeholder='What to do today?...'
+                    placeholder='What must be done today?'
                     className='form-control'
                 />
                 <button type='submit'>Add</button>

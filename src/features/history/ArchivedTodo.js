@@ -1,17 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-    deleteTodo,
-    updateTodo,
-    updateTodoComplete,
-    updateTodoStatus,
-} from './todosSlice';
+import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from '../todos/todosSlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
-const Todos = (props) => {
-    const index = props.index;
+const ArchivedTodo = (props) => {
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
@@ -25,38 +19,21 @@ const Todos = (props) => {
         //obj being sent
         text: inputValue,
         todoStatus: status,
-        completed: checked,
+        completed: checked,  
         id: id,
     };
 
-    const debouncedDispatch = useMemo(
-        () => debounce((obj) => dispatch(updateTodo(obj)), 750),
-        [dispatch]
-    );
+    // const HandleCompletion = () => {
+    //     setChecked(!checked);
+    //     baseTodo.completed = !checked;
+    //     dispatch(updateTodoComplete(baseTodo));
+    // };
 
-    const handleChange = (e) => {
-        setInputValue(e.target.value);
-        baseTodo.text = e.target.value;
-        debouncedDispatch(baseTodo);
-    };
+    // const HandleDelete = () => {
+    //     dispatch(deleteTodo(todo));
+    // };
 
-    const HandleStatusChange = (e) => {
-        setStatus(e.target.value);
-        baseTodo.todoStatus = e.target.value;
-        dispatch(updateTodoStatus(baseTodo));
-    };
-
-    const HandleCompletion = () => {
-        setChecked(!checked);
-        baseTodo.completed = !checked;
-        dispatch(updateTodoComplete(baseTodo));
-    };
-
-    const HandleDelete = () => {
-        dispatch(deleteTodo(todo));
-    };
-
-    if (checked === false)
+    if (checked === true)
         return (
             <div className='todoContainer'>
                 <input
@@ -64,7 +41,7 @@ const Todos = (props) => {
                     key={id}
                     name={`completed${id}`}
                     checked={checked}
-                    onChange={HandleCompletion}
+                    // onChange={HandleCompletion}
                 />
                 <TextareaAutosize
                     className='todoTextArea'
@@ -73,9 +50,8 @@ const Todos = (props) => {
                     type='text'
                     id={id}
                     value={inputValue}
-                    onChange={handleChange}
                 />
-                <button onClick={HandleDelete}>-</button>
+                {/* <button onClick={HandleDelete}>-</button> */}
 
                 <div className='todoInputs'>
                     <label>
@@ -86,7 +62,6 @@ const Todos = (props) => {
                             key={`todo${id}`}
                             value='todo'
                             checked={status === 'todo'}
-                            onChange={HandleStatusChange}
                         />
                         <span className='todoSpan'>Todo</span>
                     </label>
@@ -98,7 +73,6 @@ const Todos = (props) => {
                             key={`inPro${id}`}
                             value='inPro'
                             checked={status === 'inPro'}
-                            onChange={HandleStatusChange}
                         />
                         <span className='inProSpan'>In Progress</span>
                     </label>
@@ -110,7 +84,6 @@ const Todos = (props) => {
                             key={`done${id}`}
                             value='done'
                             checked={status === 'done'}
-                            onChange={HandleStatusChange}
                         />
                         <span className='doneSpan'>Done</span>
                     </label>
@@ -119,4 +92,4 @@ const Todos = (props) => {
         );
 };
 
-export default Todos;
+export default ArchivedTodo;

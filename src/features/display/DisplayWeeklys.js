@@ -1,9 +1,9 @@
-import FolderList from '../folders/FolderList';
+import Weeklys from '../weeklys/Weeklys';
 
 const DisplayFolders = () => {
     return (
         <>
-            <FolderList />
+            <Weeklys />
         </>
     )
 };
