@@ -45,7 +45,7 @@ const SubTodos = (props) => {
 
     if (checked === false)
         return (
-            <div className='todoContainer'>
+            <div className='todoContainer' draggable>
                 <input
                     type='checkbox'
                     key={id}

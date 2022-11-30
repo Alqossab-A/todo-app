@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from '../todos/todosSlice';
+import { deleteSubTodo, updateSubTodoDone } from '../todos/todosSlice';
 
-import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const ArchivedSubTodo = (props) => {
