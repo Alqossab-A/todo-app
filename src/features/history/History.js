@@ -5,30 +5,39 @@ import ArchivedSubTodo from './ArchivedSubTodo';
 import { useState } from 'react';
 
 const History = () => {
-    // const todos = useSelector(selectAllTodos);
+    const todos = useSelector(selectAllTodos);
 
-    // const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
 
-    // return (
-    //     <>
-    //         <button onClick={() => setShow(!show)}>history</button>
-    //         <div className='HistoryTodo'>
-    //             {show? todos
-    //                 .filter((todo) => todo.completed === true)
-    //                 .map((todo) => {
-    //                     return <ArchivedTodo key={todo.id} todo={todo} />;
-    //                 }): null}
-    //         </div>
+    return (
+        <>
+            <button onClick={() => setShow(!show)}>history</button>
+            <div className='HistoryTodo'>
+                {show? todos
+                    .filter((todo) => todo.completed === true)
+                    .map((todo) => {
+                        return <ArchivedTodo key={todo.id} todo={todo} />;
+                    }): null}
+            </div>
 
-    //         <div className='HistorySubTodo'>
-    //             {show? todos
-    //                 .filter((todo) => todo.done === true)
-    //                 .map((todo) => {
-    //                     return <ArchivedSubTodo key={todo.id} todo={todo} />;
-    //                 }): null}
-    //         </div>
-    //     </>
-    // );
+            <div className='HistorySubTodo'>
+                {show? todos
+                    .filter((todo) => todo.done === true)
+                    .map((todo) => {
+                        return <ArchivedSubTodo key={todo.id} todo={todo} />;
+                    }): null}
+            </div>
+
+            {/*
+                todo updated in server
+                which then gets it filtered out
+                but the history todo does not rerender 
+                nor does the original todo location after removed from history
+
+                Goal: get lists to rerender after put request is sent to server
+            */}
+        </>
+    );
 };
 
 export default History;

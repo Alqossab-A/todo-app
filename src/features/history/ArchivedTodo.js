@@ -1,15 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from '../todos/todosSlice';
 
-import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const ArchivedTodo = (props) => {
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
-    const [inputValue, setInputValue] = useState(text); //updates your component state
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
 
@@ -17,7 +15,7 @@ const ArchivedTodo = (props) => {
 
     let baseTodo = {
         //obj being sent
-        text: inputValue,
+        text: text,
         todoStatus: status,
         completed: checked,  
         id: id,
@@ -49,7 +47,7 @@ const ArchivedTodo = (props) => {
                     minRows={1}
                     type='text'
                     id={id}
-                    value={inputValue}
+                    value={text}
                 />
                 {/* <button onClick={HandleDelete}>-</button> */}
 

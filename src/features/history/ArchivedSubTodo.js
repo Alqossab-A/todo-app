@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodoDone } from '../todos/todosSlice';
+import { deleteSubTodo, fetchTodos, updateSubTodoDone } from '../todos/todosSlice';
 
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -8,14 +8,12 @@ const ArchivedSubTodo = (props) => {
     const todo = props.todo;
     const { id, subText, done } = todo;
 
-    const [inputValue, setInputValue] = useState(subText); //updates your component state
     const [checked, setChecked] = useState(done);
 
     const dispatch = useDispatch();
 
-    let baseSubTodo = {
-        //obj being sent
-        subText: inputValue,
+    let baseSubTodo = { //obj being sent
+        subText: subText,
         done: checked,
         id: id,
     };
@@ -24,6 +22,7 @@ const ArchivedSubTodo = (props) => {
         setChecked(!checked);
         baseSubTodo.done = !checked;
         dispatch(updateSubTodoDone(baseSubTodo));
+        fetchTodos()
     };
 
     const HandleDelete = () => {
@@ -46,7 +45,7 @@ const ArchivedSubTodo = (props) => {
                     minRows={1}
                     type='text'
                     id={id}
-                    value={inputValue}
+                    value={subText}
                 />
                 <button onClick={HandleDelete}>-</button>
             </div>
