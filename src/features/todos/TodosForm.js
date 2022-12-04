@@ -24,7 +24,9 @@ const TodoForm = () => {
             onSubmit={handleSubmit}
         >
             <Form>
-                <label htmlFor='todosForm' className='formLabel'>Must be done</label>
+                <label htmlFor='todosForm' className='formLabel'>
+                    Must be done
+                </label>
                 <Field
                     id='todosForm'
                     name='todosForm'

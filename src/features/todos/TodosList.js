@@ -5,9 +5,7 @@ import React from 'react';
 import Loading from '../../components/Loading';
 import Todos from '../todos/Todos';
 import Error from '../../components/Error';
-import SubTodos from './SubTodos';
 import TodoForm from './TodosForm';
-import SubTodoForm from './SubTodosForm';
 
 const TodosList = () => {
     const dispatch = useDispatch();
@@ -17,8 +15,8 @@ const TodosList = () => {
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
 
-    const onDragStart = (e , index) => {
-        console.log('drag started', index)
+    const onDragStart = (e, index) => {
+        console.log('drag started', index);
     };
 
     if (isLoading) {
@@ -34,32 +32,9 @@ const TodosList = () => {
             <>
                 <TodoForm />
                 <div className='TodoListContainer'>
-                    {todos
-                        .filter((todo) => todo.text)
-                        .map((todo, index) => {
-                            return (
-                                <Todos
-                                    key={index}
-                                    todo={todo}
-                                    index={index}
-                                />
-                            );
-                        })}
-                </div>
-
-                <SubTodoForm />
-                <div className='SubTodoListContainer'>
-                    {todos
-                        .filter((todo) => todo.subText)
-                        .map((todo, index) => {
-                            return (
-                                <SubTodos
-                                    key={index}
-                                    todo={todo}
-                                    index={index}
-                                />
-                            );
-                        })}
+                    {todos.map((todo, index) => {
+                        return <Todos key={index} todo={todo} index={index} />;
+                    })}
                 </div>
             </>
         );

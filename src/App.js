@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
+import { fetchSubTodos } from './features/subTodos/subTodosSlice';
 import { fetchTodos } from './features/todos/todosSlice';
 import HomePage from './pages/HomePage';
 
@@ -12,6 +13,7 @@ function App() {
         if (isMounted.current) return;
 
         dispatch(fetchTodos());
+        dispatch(fetchSubTodos());
 
         isMounted.current = true;
     }, [dispatch]);

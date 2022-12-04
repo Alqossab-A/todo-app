@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { postSubTodo } from './todosSlice';
+import { postSubTodo } from './subTodosSlice';
 import { Formik, Field, Form } from 'formik';
 
 const SubTodoForm = () => {

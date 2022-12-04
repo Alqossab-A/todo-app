@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from './todosSlice';
+import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from './subTodosSlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const SubTodos = (props) => {
     const index = props.index;
-    const todo = props.todo;
-    const { id, subText, done } = todo;
+    const subTodo = props.subTodo;
+    const { id, subText, done } = subTodo;
 
     const [inputValue, setInputValue] = useState(subText); //updates your component state
     const [checked, setChecked] = useState(done);
@@ -40,7 +40,7 @@ const SubTodos = (props) => {
     };
 
     const HandleDelete = () => {
-        dispatch(deleteSubTodo(todo));
+        dispatch(deleteSubTodo(subTodo));
     };
 
     if (checked === false)
