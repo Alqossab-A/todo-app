@@ -15,8 +15,8 @@ const SubTodosList = () => {
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
 
-    const onDragStart = (e , index) => {
-        console.log('drag started', index)
+    const onDragStart = (e, index) => {
+        console.log('drag started', index);
     };
 
     if (isLoading) {
@@ -32,16 +32,15 @@ const SubTodosList = () => {
             <>
                 <SubTodoForm />
                 <div className='SubTodoListContainer'>
-                    {subTodos
-                        .map((subTodo, index) => {
-                            return (
-                                <SubTodos
-                                    key={index}
-                                    subTodo={subTodo}
-                                    index={index}
-                                />
-                            );
-                        })}
+                    {subTodos.map((subTodo, index) => {
+                        return (
+                            <SubTodos
+                                key={index}
+                                subTodo={subTodo}
+                                index={index}
+                            />
+                        );
+                    })}
                 </div>
             </>
         );

@@ -117,7 +117,6 @@ const todosSlice = createSlice({
     initialState,
     reducers: {
         addTodo: (state, action) => {
-            console.log('addTodo action.payload:', action.payload);
             const newTodo = {
                 id: state.todosArray.length + 1,
                 ...action.payload,

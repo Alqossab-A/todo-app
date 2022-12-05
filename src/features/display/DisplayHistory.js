@@ -1,9 +1,9 @@
-import History from '../history/History';
+import HistoryList from '../history/HistoryList';
 
 const DisplayHistory = () => {
     return (
-        <div className='DisplayHistory'>
-            <History />
+        <div className='DisplayHistoryList'>
+            <HistoryList />
         </div>
     );
 };

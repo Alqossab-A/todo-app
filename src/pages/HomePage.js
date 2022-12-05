@@ -10,7 +10,7 @@ const HomePage = () => {
             <Weeklys />
             <DisplayTodos />
             <DisplaySubTodos />
-            {/* <DisplayHistory /> */}
+            <DisplayHistory />
             <Footer />
         </>
     );
