@@ -1,23 +1,22 @@
 import ArchivedSubTodo from './ArchivedSubTodo';
+import ArchivedTodo from './ArchivedTodo';
 
 const History = (props) => {
     const history = props.history;
 
-    return (
-        <>
-            <div className='HistoryTodo'>
-                {history.filter(history.completed).map((history) => {
-                    return <ArchivedSubTodo history={history} />;
-                })}
-            </div>
-            
-            <div className='HistorySubTodo'>
-                {history.filter(history.done).map((history) => {
-                    return <ArchivedSubTodo history={history} />;
-                })}
-            </div>
-        </>
-    );
+    // if (history.text) {
+    //     return <ArchivedTodo todo={history} />;
+    // } else if (history.subText) {
+    //     return <ArchivedSubTodo subTodo={history} />;
+    // } else {
+    //     return null;
+    // }
+
+    return history.text ? (
+        <ArchivedTodo todo={history} />
+    ) : history.subText ? (
+        <ArchivedSubTodo subTodo={history} />
+    ) : null;
 };
 
 export default History;

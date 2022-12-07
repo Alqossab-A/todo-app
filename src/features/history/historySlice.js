@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../app/shared/baseUrl';
 
-export const fetchHistory = createAsyncThunk('history/fetchhistory', async () => {
+export const fetchHistory = createAsyncThunk('history/fetchHistory', async () => {
     const response = await fetch(baseUrl + 'history');
 
     if (!response.ok) {
@@ -22,7 +22,10 @@ const initialState = {
 const historySlice = createSlice({
     name: 'history',
     initialState,
-    reducers: {},
+    reducers: {
+        subTodoHistory: (state, action) => {
+        },
+    },
     extraReducers: {
         [fetchHistory.pending]: (state) => {
             state.isLoading = true;
