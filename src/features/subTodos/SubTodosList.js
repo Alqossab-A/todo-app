@@ -1,4 +1,3 @@
-import { selectAllSubTodos } from './subTodosSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
@@ -10,13 +9,14 @@ import SubTodoForm from './SubTodosForm';
 const SubTodosList = () => {
     const dispatch = useDispatch();
 
-    const subTodos = useSelector(selectAllSubTodos);
+    const subTodos = useSelector(state => state.subTodos.subTodosArray);
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
 
     const onDragStart = (e, index) => {
         console.log('drag started', index);
+        
     };
 
     if (isLoading) {

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHistory, selectAllHistory } from './historySlice';
 
 import History from './History';
 
@@ -9,7 +8,7 @@ const HistoryList = () => {
     const isMounted = useRef();
     const [show, setShow] = useState(false);
 
-    const history = useSelector(selectAllHistory);
+    const history = useSelector((state) => state.subTodos.subTodosArray);
 
     // useEffect(() => {
     //     if (isMounted.current) return;

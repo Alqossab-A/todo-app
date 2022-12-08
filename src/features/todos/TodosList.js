@@ -1,4 +1,3 @@
-import { selectAllTodos } from './todosSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
@@ -10,7 +9,7 @@ import TodoForm from './TodosForm';
 const TodosList = () => {
     const dispatch = useDispatch();
 
-    const todos = useSelector(selectAllTodos);
+    const todos = useSelector(state => state.todos.todosArray);
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
