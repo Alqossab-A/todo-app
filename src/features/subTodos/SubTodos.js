@@ -35,12 +35,8 @@ const SubTodos = (props) => {
 
     const HandleCompletion = () => {
         setChecked(!checked);
-        let checkedObj = {
-            subText: inputValue,
-            done: !checked,
-            id: id,
-        };
-        dispatch(updateSubTodoDone(checkedObj));
+        baseSubTodo.done = !checked;
+        dispatch(updateSubTodoDone(baseSubTodo));
     };
 
     const HandleDelete = () => {
