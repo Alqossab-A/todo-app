@@ -78,9 +78,6 @@ export const updateSubTodoDone = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status);
         }
-
-        const data = await response.json();
-        dispatch(sendToHistory(data));
     }
 );
 
@@ -104,17 +101,7 @@ const subTodosSlice = createSlice({
         sortSubTodo: (state, action) => {
             console.log('sortSubTodo action.payload:', action.payload);
             state.subTodosArray = action.payload;
-        },
-        sendToHistory: (state, action) => {
-            console.log('action sendtohistory',action.payload);
-            return state.subTodosArray.map(item => {
-                if (item.id === action.payload.id){
-                    let newObj = action.payload;
-                    return { ...newObj };
-                }
-                return item
-            })
-        },
+        }
     },
     extraReducers: {
         [fetchSubTodos.pending]: (state) => {
@@ -140,12 +127,12 @@ const subTodosSlice = createSlice({
                 (subTodo) => subTodo.id !== action.payload.id
             );
         },
-        // [updateSubTodoDone.fulfilled]: (state, action) => {
-        //     return {
-        //         ...state,
-        //         subTodo: action.payload
-        //     }
-        // }
+        [updateSubTodoDone.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                subTodo: action.payload
+            }
+        }
     },
 });
 
@@ -161,5 +148,4 @@ export const selectSubTodosById = (id) => (state) => {
 
 export const subTodoReducer = subTodosSlice.reducer;
 
-export const { addSubTodo, updateSubTodos, sortSubTodo, sendToHistory } =
-    subTodosSlice.actions;
+export const { addSubTodo, updateSubTodos, sortSubTodo, sendToHistory } = subTodosSlice.actions;
