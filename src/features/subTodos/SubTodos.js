@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from './subTodosSlice';
+import {
+    deleteSubTodo,
+    updateSubTodo,
+    updateSubTodoDone,
+} from './subTodosSlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -15,12 +19,17 @@ const SubTodos = (props) => {
 
     const dispatch = useDispatch();
 
-    let baseSubTodo = {
-        //obj being sent
-        subText: inputValue,
-        done: checked,
-        id: id,
-    };
+    let baseSubTodo; // Declare baseSubTodo variable
+
+    if (id && inputValue && typeof checked === 'boolean') {
+        // Initialize baseSubTodo object only if id, inputValue, and checked are defined and valid
+        baseSubTodo = {
+            //obj being sent
+            subText: inputValue,
+            done: checked,
+            id: id,
+        };
+    }
 
     const debouncedDispatch = useMemo(
         () => debounce((obj) => dispatch(updateSubTodo(obj)), 750),

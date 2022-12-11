@@ -68,7 +68,7 @@ export const deleteSubTodo = createAsyncThunk(
 
 export const updateSubTodoDone = createAsyncThunk(
     'subTodos/updateSubTodoDone',
-    async (subTodo, { dispatch }) => {
+    async (subTodo) => {
         const response = await fetch(baseUrl + `subTodos/${subTodo.id}`, {
             method: 'PUT',
             body: JSON.stringify(subTodo),
@@ -78,6 +78,8 @@ export const updateSubTodoDone = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status);
         }
+
+        return response.json();
     }
 );
 
@@ -101,7 +103,7 @@ const subTodosSlice = createSlice({
         sortSubTodo: (state, action) => {
             console.log('sortSubTodo action.payload:', action.payload);
             state.subTodosArray = action.payload;
-        }
+        },
     },
     extraReducers: {
         [fetchSubTodos.pending]: (state) => {
@@ -128,11 +130,16 @@ const subTodosSlice = createSlice({
             );
         },
         [updateSubTodoDone.fulfilled]: (state, action) => {
-            return {
-                ...state,
-                subTodo: action.payload
+            const { subtodo } = action.payload;
+            if (subtodo && subtodo.id) {
+                // Only update state if subtodo is defined and has an id property
+                state.subTodosArray = state.subTodosArray.map((t) =>
+                    t.id === subtodo.id ? subtodo : t
+                );
+            } else {
+                console.error("baseSubTodo is undefined or does not have an id property");
             }
-        }
+        },
     },
 });
 
