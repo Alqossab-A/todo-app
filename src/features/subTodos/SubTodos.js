@@ -15,14 +15,14 @@ const SubTodos = (props) => {
     const { id, subText, done } = subTodo;
 
     const [inputValue, setInputValue] = useState(subText); //updates your component state
-    const [checked, setChecked] = useState(done);
+    const [checked, setChecked] = useState(subTodo.done);
 
     const dispatch = useDispatch();
 
     let baseSubTodo; // Declare baseSubTodo variable
 
-    if (id && inputValue && typeof checked === 'boolean') {
-        // Initialize baseSubTodo object only if id, inputValue, and checked are defined and valid
+    // Initialize baseSubTodo object only if it has not been initialized already and if id, inputValue, and checked are defined and valid
+    if (!baseSubTodo && id && inputValue && typeof checked === 'boolean') {
         baseSubTodo = {
             //obj being sent
             subText: inputValue,
@@ -42,9 +42,11 @@ const SubTodos = (props) => {
         debouncedDispatch(baseSubTodo);
     };
 
+
     const HandleCompletion = () => {
-        setChecked(!checked);
-        baseSubTodo.done = !checked;
+        setChecked(!done);
+        baseSubTodo.done = !done;
+        console.log('HandleCompletion baseSubTodo:', baseSubTodo); // Log updated to-do item
         dispatch(updateSubTodoDone(baseSubTodo));
     };
 
@@ -52,7 +54,7 @@ const SubTodos = (props) => {
         dispatch(deleteSubTodo(subTodo));
     };
 
-    if (checked === false)
+    if (done === false)
         return (
             <div className='todoContainer' draggable>
                 <input

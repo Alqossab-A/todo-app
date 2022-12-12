@@ -8,12 +8,16 @@ const HistoryList = () => {
 
     const history = useSelector((state) => state.subTodos.subTodosArray);
 
+    const completedSubTodos = history.filter(
+        (subTodo) => subTodo.done === true
+    );
+
     return (
         <>
             <button onClick={() => setShow(!show)}>history</button>
             <div className='HistoryTodo'>
                 {show
-                    ? history.map((history) => {
+                    ? completedSubTodos.map((history) => {
                           return <History history={history} />;
                       })
                     : null}

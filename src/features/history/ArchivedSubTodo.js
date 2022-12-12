@@ -8,7 +8,7 @@ const ArchivedSubTodo = (props) => {
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
 
-    const [checked, setChecked] = useState(done);
+    const [checked, setChecked] = useState(subTodo.done);
 
     const dispatch = useDispatch();
 
@@ -19,8 +19,8 @@ const ArchivedSubTodo = (props) => {
     };
 
     const HandleCompletion = () => {
-        setChecked(!checked);
-        baseSubTodo.done = !checked;
+        setChecked(!done);
+        baseSubTodo.done = !done;
         dispatch(updateSubTodoDone(baseSubTodo));
     };
 
@@ -28,7 +28,7 @@ const ArchivedSubTodo = (props) => {
         dispatch(deleteSubTodo(subTodo));
     };
 
-    if (checked === true)
+    if (done === true)
         return (
             <div className='todoContainer'>
                 <input

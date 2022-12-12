@@ -68,18 +68,22 @@ export const deleteSubTodo = createAsyncThunk(
 
 export const updateSubTodoDone = createAsyncThunk(
     'subTodos/updateSubTodoDone',
-    async (subTodo) => {
+    async (subTodo, { dispatch }) => {
+        console.log('updateSubTodoDone called with subTodo:', subTodo); // Log subTodo being sent in request
         const response = await fetch(baseUrl + `subTodos/${subTodo.id}`, {
             method: 'PUT',
             body: JSON.stringify(subTodo),
             headers: { 'Content-Type': 'application/json' },
         });
 
+        console.log('updateSubTodoDone response:', response); // Log response from JSON server
+
         if (!response.ok) {
             return Promise.reject(response.status);
         }
 
-        return response.json();
+        const data = await response.json();
+        dispatch(updateSubTodoDone.fulfilled(data));
     }
 );
 
@@ -130,15 +134,19 @@ const subTodosSlice = createSlice({
             );
         },
         [updateSubTodoDone.fulfilled]: (state, action) => {
-            const { subtodo } = action.payload;
-            if (subtodo && subtodo.id) {
-                // Only update state if subtodo is defined and has an id property
-                state.subTodosArray = state.subTodosArray.map((t) =>
-                    t.id === subtodo.id ? subtodo : t
-                );
-            } else {
-                console.error("baseSubTodo is undefined or does not have an id property");
-            }
+            // Retrieve the updated subtodo from the action payload
+            const updatedSubTodo = action.payload;
+
+            // Find the index of the subtodo in the global state
+            const index = state.subTodosArray.findIndex(
+                (subTodo) => subTodo.id === updatedSubTodo.id
+            );
+
+            // Update the subtodo in the global state
+            state.subTodosArray[index] = {
+                ...updatedSubTodo,
+                done: updatedSubTodo.done, // Set the 'done' property based on the value in the action payload
+            };
         },
     },
 });
@@ -155,4 +163,5 @@ export const selectSubTodosById = (id) => (state) => {
 
 export const subTodoReducer = subTodosSlice.reducer;
 
-export const { addSubTodo, updateSubTodos, sortSubTodo, sendToHistory } = subTodosSlice.actions;
+export const { addSubTodo, updateSubTodos, sortSubTodo, sendToHistory } =
+    subTodosSlice.actions;
