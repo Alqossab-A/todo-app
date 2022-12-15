@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSubTodo, updateSubTodoDone } from '../subTodos/subTodosSlice';
 
@@ -8,15 +8,22 @@ const ArchivedSubTodo = (props) => {
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
 
-    const [checked, setChecked] = useState(done);
+    const [checked, setChecked] = useState(subTodo.done);
 
     const dispatch = useDispatch();
-
-    let baseSubTodo = { //obj being sent
+    
+    //obj being sent
+    let baseSubTodo = {
         subText: subText,
         done: checked,
         id: id,
     };
+
+    // This effect will run whenever the `subTodo` prop changes
+    useEffect(() => {
+        // Update the component's state with the value of the `done` property from the `subTodo` prop
+        setChecked(subTodo.done);
+    }, [subTodo]);
 
     const HandleCompletion = () => {
         setChecked(!done);

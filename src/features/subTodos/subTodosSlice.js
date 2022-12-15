@@ -136,19 +136,14 @@ const subTodosSlice = createSlice({
         [updateSubTodoDone.fulfilled]: (state, action) => {
             // Retrieve the updated subtodo from the action payload
             const updatedSubTodo = action.payload;
-            console.log('action.paylload', action.payload);
-
-            // Create a new array with the updated subtodo
-            const newSubTodosArray = state.subTodosArray.map((subTodo) => {
-                if (subTodo.id === updatedSubTodo.id) {
-                    return updatedSubTodo;
-                } else {
-                    return subTodo;
-                }
-            });
-
-            // Update the global state with the new array
-            state.subTodosArray = newSubTodosArray;
+    
+            // Find the index of the subtodo in the global state
+            const index = state.subTodosArray.findIndex(
+                (subTodo) => subTodo.id === updatedSubTodo.id,
+            );
+    
+            // Update the subtodo in the global state
+            state.subTodosArray[index] = updatedSubTodo;
         },
     },
 });
