@@ -8,7 +8,7 @@ const ArchivedSubTodo = (props) => {
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
 
-    const [checked, setChecked] = useState(subTodo.done);
+    const [checked, setChecked] = useState(done);
 
     const dispatch = useDispatch();
 

@@ -83,7 +83,7 @@ export const updateSubTodoDone = createAsyncThunk(
         }
 
         const data = await response.json();
-        dispatch(updateSubTodoDone.fulfilled(data));
+        return data;
     }
 );
 
@@ -136,17 +136,19 @@ const subTodosSlice = createSlice({
         [updateSubTodoDone.fulfilled]: (state, action) => {
             // Retrieve the updated subtodo from the action payload
             const updatedSubTodo = action.payload;
+            console.log('action.paylload', action.payload);
 
-            // Find the index of the subtodo in the global state
-            const index = state.subTodosArray.findIndex(
-                (subTodo) => subTodo.id === updatedSubTodo.id
-            );
+            // Create a new array with the updated subtodo
+            const newSubTodosArray = state.subTodosArray.map((subTodo) => {
+                if (subTodo.id === updatedSubTodo.id) {
+                    return updatedSubTodo;
+                } else {
+                    return subTodo;
+                }
+            });
 
-            // Update the subtodo in the global state
-            state.subTodosArray[index] = {
-                ...updatedSubTodo,
-                done: updatedSubTodo.done, // Set the 'done' property based on the value in the action payload
-            };
+            // Update the global state with the new array
+            state.subTodosArray = newSubTodosArray;
         },
     },
 });

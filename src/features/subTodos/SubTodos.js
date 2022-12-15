@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     deleteSubTodo,
@@ -14,22 +14,24 @@ const SubTodos = (props) => {
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
 
-    const [inputValue, setInputValue] = useState(subText); //updates your component state
+    const [inputValue, setInputValue] = useState(subText);
     const [checked, setChecked] = useState(subTodo.done);
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        // Whenever the 'done' property of the todo item changes, re-render the checkbox
+        setChecked(done);
+    }, [done]);
+
     let baseSubTodo; // Declare baseSubTodo variable
 
-    // Initialize baseSubTodo object only if it has not been initialized already and if id, inputValue, and checked are defined and valid
-    if (!baseSubTodo && id && inputValue && typeof checked === 'boolean') {
-        baseSubTodo = {
-            //obj being sent
-            subText: inputValue,
-            done: checked,
-            id: id,
-        };
-    }
+    baseSubTodo = {
+        //obj being sent
+        subText: inputValue,
+        done: checked,
+        id: id,
+    };
 
     const debouncedDispatch = useMemo(
         () => debounce((obj) => dispatch(updateSubTodo(obj)), 750),
@@ -41,7 +43,6 @@ const SubTodos = (props) => {
         baseSubTodo.subText = e.target.value;
         debouncedDispatch(baseSubTodo);
     };
-
 
     const HandleCompletion = () => {
         setChecked(!done);
