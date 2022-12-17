@@ -11,19 +11,18 @@ const ArchivedSubTodo = (props) => {
     const [checked, setChecked] = useState(subTodo.done);
 
     const dispatch = useDispatch();
-    
+
+    // This effect will run whenever the `subTodo` prop changes
+    useEffect(() => {
+        setChecked(subTodo.done);
+    }, [subTodo]);
+
     //obj being sent
     let baseSubTodo = {
         subText: subText,
         done: checked,
         id: id,
     };
-
-    // This effect will run whenever the `subTodo` prop changes
-    useEffect(() => {
-        // Update the component's state with the value of the `done` property from the `subTodo` prop
-        setChecked(subTodo.done);
-    }, [subTodo]);
 
     const HandleCompletion = () => {
         setChecked(!done);

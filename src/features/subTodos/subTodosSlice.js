@@ -66,17 +66,45 @@ export const deleteSubTodo = createAsyncThunk(
     }
 );
 
+export const deleteExpiredSubTodos = createAsyncThunk(
+    'subTodos/deleteExpiredSubTodos',
+    async () => {
+        const currentTime = Date.now();
+
+        // Send a GET request to retrieve the subTodos array from the server
+        const response = await fetch(baseUrl + 'subTodos');
+
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status:' + response.status);
+        }
+
+        const data = await response.json();
+
+        // Filter the subTodos array by dateToDelete using JavaScript
+        const expiredSubTodos = data.filter(
+            (subTodo) => subTodo.dateToDelete <= currentTime
+        );
+
+        // Send a DELETE request to delete the expired subTodos from the server
+        for (const subTodo of expiredSubTodos) {
+            await fetch(baseUrl + `subTodos/${subTodo.id}`, {
+                method: 'DELETE',
+            });
+        }
+    }
+);
+
 export const updateSubTodoDone = createAsyncThunk(
     'subTodos/updateSubTodoDone',
-    async (subTodo, { dispatch }) => {
-        console.log('updateSubTodoDone called with subTodo:', subTodo); // Log subTodo being sent in request
+    async (subTodo) => {
+        // console.log('updateSubTodoDone called with subTodo:', subTodo); // Log subTodo being sent in request
         const response = await fetch(baseUrl + `subTodos/${subTodo.id}`, {
             method: 'PUT',
             body: JSON.stringify(subTodo),
             headers: { 'Content-Type': 'application/json' },
         });
 
-        console.log('updateSubTodoDone response:', response); // Log response from JSON server
+        // console.log('updateSubTodoDone response:', response); // Log response from JSON server
 
         if (!response.ok) {
             return Promise.reject(response.status);
@@ -136,12 +164,12 @@ const subTodosSlice = createSlice({
         [updateSubTodoDone.fulfilled]: (state, action) => {
             // Retrieve the updated subtodo from the action payload
             const updatedSubTodo = action.payload;
-    
+
             // Find the index of the subtodo in the global state
             const index = state.subTodosArray.findIndex(
-                (subTodo) => subTodo.id === updatedSubTodo.id,
+                (subTodo) => subTodo.id === updatedSubTodo.id
             );
-    
+
             // Update the subtodo in the global state
             state.subTodosArray[index] = updatedSubTodo;
         },

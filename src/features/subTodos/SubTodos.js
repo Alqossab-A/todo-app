@@ -13,20 +13,17 @@ const SubTodos = (props) => {
     const index = props.index;
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
+    const dispatch = useDispatch();
 
     const [inputValue, setInputValue] = useState(subText);
     const [checked, setChecked] = useState(subTodo.done);
 
-    const dispatch = useDispatch();
-
+    // Whenever the 'done' property of the todo item changes, re-render the checkbox
     useEffect(() => {
-        // Whenever the 'done' property of the todo item changes, re-render the checkbox
         setChecked(done);
     }, [done]);
 
-    let baseSubTodo; // Declare baseSubTodo variable
-
-    baseSubTodo = {
+    let baseSubTodo = {
         //obj being sent
         subText: inputValue,
         done: checked,
@@ -46,9 +43,14 @@ const SubTodos = (props) => {
 
     const HandleCompletion = () => {
         setChecked(!done);
-        baseSubTodo.done = !done;
-        console.log('HandleCompletion baseSubTodo:', baseSubTodo); // Log updated to-do item
-        dispatch(updateSubTodoDone(baseSubTodo));
+        let obj = {
+            subText: inputValue,
+            done: !done,
+            id: id,
+            dateToDelete: Date.now() + 3 * 24 * 60 * 60 * 1000, // 3 days from the time it is sent
+        };
+        // baseSubTodo.done = !done;
+        dispatch(updateSubTodoDone(obj));
     };
 
     const HandleDelete = () => {

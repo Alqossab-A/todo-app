@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import History from './History';
 
 const HistoryList = () => {
@@ -14,11 +13,11 @@ const HistoryList = () => {
 
     return (
         <>
-            <button onClick={() => setShow(!show)}>history</button>
+            <button onClick={() => {setShow(!show)}}>history</button>
             <div className='HistoryTodo'>
                 {show
-                    ? completedSubTodos.map((history) => {
-                          return <History history={history} />;
+                    ? completedSubTodos.map((history, index) => {
+                          return <History key={index} history={history} />;
                       })
                     : null}
             </div>
