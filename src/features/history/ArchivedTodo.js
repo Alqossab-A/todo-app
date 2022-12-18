@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteSubTodo, updateSubTodo, updateSubTodoDone } from '../todos/todosSlice';
+import { updateTodoComplete, deleteTodo } from '../todos/todosSlice';
 
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -13,23 +13,28 @@ const ArchivedTodo = (props) => {
 
     const dispatch = useDispatch();
 
+    // This effect will run whenever the `todo` prop changes
+    useEffect(() => {
+        setChecked(todo.completed);
+    }, [todo]);
+
+    //obj being sent
     let baseTodo = {
-        //obj being sent
         text: text,
         todoStatus: status,
         completed: checked,  
         id: id,
     };
 
-    // const HandleCompletion = () => {
-    //     setChecked(!checked);
-    //     baseTodo.completed = !checked;
-    //     dispatch(updateTodoComplete(baseTodo));
-    // };
+    const HandleCompletion = () => {
+        setChecked(!checked);
+        baseTodo.completed = !checked;
+        dispatch(updateTodoComplete(baseTodo));
+    };
 
-    // const HandleDelete = () => {
-    //     dispatch(deleteTodo(todo));
-    // };
+    const HandleDelete = () => {
+        dispatch(deleteTodo(todo));
+    };
 
     if (checked === true)
         return (
@@ -39,7 +44,7 @@ const ArchivedTodo = (props) => {
                     key={id}
                     name={`completed${id}`}
                     checked={checked}
-                    // onChange={HandleCompletion}
+                    onChange={HandleCompletion}
                 />
                 <TextareaAutosize
                     className='todoTextArea'
@@ -49,7 +54,7 @@ const ArchivedTodo = (props) => {
                     id={id}
                     value={text}
                 />
-                {/* <button onClick={HandleDelete}>-</button> */}
+                <button onClick={HandleDelete}>-</button>
 
                 <div className='todoInputs'>
                     <label>

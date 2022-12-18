@@ -72,6 +72,37 @@ export const updateTodoStatus = createAsyncThunk(
     }
 );
 
+export const deleteExpiredTodo = createAsyncThunk(
+    'todos/deleteExpiredTodo',
+    async ({ dispatch }) => {
+        const currentTime = Date.now();
+
+        // Send a GET request to retrieve the todos array from the server
+        const response = await fetch(baseUrl + 'todos');
+
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status:' + response.status);
+        }
+
+        const data = await response.json();
+
+        // Filter the todos array by the dateToDelete
+        const expiredTodos = data.filter (
+            (todo) => todo.dateToDelete <= currentTime
+        );
+
+        // Send a DELETE request to delete the expired todos from the server
+        for (const todo of expiredTodos) {
+            await fetch(baseUrl + `todos/${todo.id}`, {
+                method: 'DELETE',
+            });
+        }
+
+        // Dispatch an action to update the todosArray in the store
+        dispatch(fetchTodos());
+    }
+)
+
 export const updateTodoComplete = createAsyncThunk(
     'todos/updateTodoComplete',
     async (todo) => {
@@ -84,25 +115,9 @@ export const updateTodoComplete = createAsyncThunk(
         if (!response.ok) {
             return Promise.reject(response.status);
         }
-    }
-);
-
-export const updateTodoPosition = createAsyncThunk(
-    'todos/updateTodoPosition',
-    async (todosArray, { dispatch }) => {
-        console.log('updatetodosPos:', todosArray);
-        const response = await fetch(baseUrl, {
-            method: 'PUT',
-            body: JSON.stringify(todosArray),
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!response.ok) {
-            return Promise.reject(response.status);
-        }
 
         const data = await response.json();
-        dispatch(sortTodo(data));
+        return data;
     }
 );
 
@@ -151,6 +166,18 @@ const todosSlice = createSlice({
             state.todosArray = state.todosArray.filter(
                 (todo) => todo.id !== action.payload.id
             );
+        },
+        [updateTodoComplete.fulfilled]: (state, action) => {
+            // Retrieve the updated subtodo from the action payload
+            const updatedTodo = action.payload;
+
+            // Find the index of the todo in the global state
+            const index = state.todosArray.findIndex(
+                (todo) => todo.id === updatedTodo.id
+            );
+
+            // Update the todo in the global state
+            state.todosArray[index] = updatedTodo;
         },
     },
 });

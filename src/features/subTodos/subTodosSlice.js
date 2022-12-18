@@ -80,7 +80,7 @@ export const deleteExpiredSubTodos = createAsyncThunk(
 
         const data = await response.json();
 
-        // Filter the subTodos array by dateToDelete using JavaScript
+        // Filter the subTodos array by dateToDelete
         const expiredSubTodos = data.filter(
             (subTodo) => subTodo.dateToDelete <= currentTime
         );
@@ -97,14 +97,11 @@ export const deleteExpiredSubTodos = createAsyncThunk(
 export const updateSubTodoDone = createAsyncThunk(
     'subTodos/updateSubTodoDone',
     async (subTodo) => {
-        // console.log('updateSubTodoDone called with subTodo:', subTodo); // Log subTodo being sent in request
         const response = await fetch(baseUrl + `subTodos/${subTodo.id}`, {
             method: 'PUT',
             body: JSON.stringify(subTodo),
             headers: { 'Content-Type': 'application/json' },
         });
-
-        // console.log('updateSubTodoDone response:', response); // Log response from JSON server
 
         if (!response.ok) {
             return Promise.reject(response.status);
@@ -188,5 +185,5 @@ export const selectSubTodosById = (id) => (state) => {
 
 export const subTodoReducer = subTodosSlice.reducer;
 
-export const { addSubTodo, updateSubTodos, sortSubTodo, sendToHistory } =
+export const { addSubTodo, updateSubTodos, sortSubTodo } =
     subTodosSlice.actions;

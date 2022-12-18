@@ -23,8 +23,8 @@ const SubTodos = (props) => {
         setChecked(done);
     }, [done]);
 
+    //obj being sent
     let baseSubTodo = {
-        //obj being sent
         subText: inputValue,
         done: checked,
         id: id,
@@ -43,13 +43,13 @@ const SubTodos = (props) => {
 
     const HandleCompletion = () => {
         setChecked(!done);
+        // obj created to add dateToDelete
         let obj = {
             subText: inputValue,
             done: !done,
             id: id,
-            dateToDelete: Date.now() + 3 * 24 * 60 * 60 * 1000, // 3 days from the time it is sent
+            dateToDelete: Date.now() +  60 * 1000, // 3 days from the time it is sent
         };
-        // baseSubTodo.done = !done;
         dispatch(updateSubTodoDone(obj));
     };
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
     deleteTodo,
@@ -15,14 +15,19 @@ const Todos = (props) => {
     const todo = props.todo;
     const { id, text, todoStatus, completed } = todo;
 
-    const [inputValue, setInputValue] = useState(text); //updates your component state
+    const [inputValue, setInputValue] = useState(text);
     const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
 
     const dispatch = useDispatch();
 
+    // Whenever the 'completed' property of the todo item changes, re-render the checkbox
+    useEffect(() => {
+        setChecked(completed);
+    }, [completed]);
+
+    //obj being sent
     let baseTodo = {
-        //obj being sent
         text: inputValue,
         todoStatus: status,
         completed: checked,
@@ -48,8 +53,15 @@ const Todos = (props) => {
 
     const HandleCompletion = () => {
         setChecked(!checked);
-        baseTodo.completed = !checked;
-        dispatch(updateTodoComplete(baseTodo));
+        // obj created to add dateToDelete
+        let obj = {
+            text: inputValue,
+            todoStatus: status,
+            completed: !checked,
+            id: id,
+            dateToDelete: Date.now() +  60 * 1000, // 3 days from the time it is sent
+        };
+        dispatch(updateTodoComplete(obj));
     };
 
     const HandleDelete = () => {

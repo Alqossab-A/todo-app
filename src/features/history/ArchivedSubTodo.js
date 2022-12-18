@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSubTodo, updateSubTodoDone } from '../subTodos/subTodosSlice';
-
 import TextareaAutosize from 'react-textarea-autosize';
 
 const ArchivedSubTodo = (props) => {
     const subTodo = props.subTodo;
     const { id, subText, done } = subTodo;
 
-    const [checked, setChecked] = useState(subTodo.done);
+    const [checked, setChecked] = useState(done);
 
     const dispatch = useDispatch();
 
