@@ -74,7 +74,7 @@ export const updateTodoStatus = createAsyncThunk(
 
 export const deleteExpiredTodo = createAsyncThunk(
     'todos/deleteExpiredTodo',
-    async ({ dispatch }) => {
+    async () => {
         const currentTime = Date.now();
 
         // Send a GET request to retrieve the todos array from the server
@@ -87,7 +87,7 @@ export const deleteExpiredTodo = createAsyncThunk(
         const data = await response.json();
 
         // Filter the todos array by the dateToDelete
-        const expiredTodos = data.filter (
+        const expiredTodos = data.filter(
             (todo) => todo.dateToDelete <= currentTime
         );
 
@@ -98,10 +98,9 @@ export const deleteExpiredTodo = createAsyncThunk(
             });
         }
 
-        // Dispatch an action to update the todosArray in the store
-        dispatch(fetchTodos());
+        return expiredTodos.map((todo) => todo.id);
     }
-)
+);
 
 export const updateTodoComplete = createAsyncThunk(
     'todos/updateTodoComplete',
@@ -178,6 +177,12 @@ const todosSlice = createSlice({
 
             // Update the todo in the global state
             state.todosArray[index] = updatedTodo;
+        },
+        [deleteExpiredTodo.fulfilled]: (state, action) => {
+            // Update the state to remove the expired todos
+            state.todos = state.todos.filter(
+                (todo) => !action.payload.includes(todo.id)
+            );
         },
     },
 });

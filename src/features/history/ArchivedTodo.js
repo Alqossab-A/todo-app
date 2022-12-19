@@ -22,7 +22,7 @@ const ArchivedTodo = (props) => {
     let baseTodo = {
         text: text,
         todoStatus: status,
-        completed: checked,  
+        completed: checked,
         id: id,
     };
 
@@ -58,36 +58,12 @@ const ArchivedTodo = (props) => {
 
                 <div className='todoInputs'>
                     <label>
-                        <input
-                            className='todoRadio'
-                            type='radio'
-                            name={`radio${id}`}
-                            key={`todo${id}`}
-                            value='todo'
-                            checked={status === 'todo'}
-                        />
                         <span className='todoSpan'>Todo</span>
                     </label>
                     <label>
-                        <input
-                            className='inProRadio'
-                            type='radio'
-                            name={`radio${id}`}
-                            key={`inPro${id}`}
-                            value='inPro'
-                            checked={status === 'inPro'}
-                        />
                         <span className='inProSpan'>In Progress</span>
                     </label>
                     <label>
-                        <input
-                            className='doneRadio'
-                            type='radio'
-                            name={`radio${id}`}
-                            key={`done${id}`}
-                            value='done'
-                            checked={status === 'done'}
-                        />
                         <span className='doneSpan'>Done</span>
                     </label>
                 </div>
