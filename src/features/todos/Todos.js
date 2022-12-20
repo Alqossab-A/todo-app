@@ -59,7 +59,7 @@ const Todos = (props) => {
             todoStatus: status,
             completed: !checked,
             id: id,
-            dateToDelete: Date.now() +  60 * 1000, // 3 days from the time it is sent
+            dateToDelete: Date.now() + 3 * 24 * 60 * 60 * 1000, // 3 days from the time it is sent
         };
         dispatch(updateTodoComplete(obj));
     };

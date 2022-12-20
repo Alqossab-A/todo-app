@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteSubTodo, updateSubTodoDone } from '../subTodos/subTodosSlice';
+import useDaysLeft from '../../utils/useDaysLeft';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const ArchivedSubTodo = (props) => {
     const subTodo = props.subTodo;
-    const { id, subText, done } = subTodo;
+    const { id, subText, done, dateToDelete } = subTodo;
 
     const [checked, setChecked] = useState(done);
+    const daysLeft = useDaysLeft(dateToDelete);
 
     const dispatch = useDispatch();
 
@@ -52,6 +54,7 @@ const ArchivedSubTodo = (props) => {
                     value={subText}
                 />
                 <button onClick={HandleDelete}>-</button>
+                <span className='historyCountdown'>~{daysLeft} days left</span>
             </div>
         );
 };

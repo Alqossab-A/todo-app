@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteExpiredSubTodos } from '../features/subTodos/subTodosSlice';
-import { deleteExpiredTodo } from '../features/todos/todosSlice';
+import { deleteExpiredTodos } from '../features/todos/todosSlice';
 
 export const useCheckExpired = (_) => {
     const isMounted = useRef();
@@ -13,7 +13,7 @@ export const useCheckExpired = (_) => {
         if (isMounted.current) return;
 
         dispatch(deleteExpiredSubTodos());
-        dispatch(deleteExpiredTodo());
+        dispatch(deleteExpiredTodos());
 
         // Filter and sort combinedArray in-place
         const combinedArray = [...subTodoArray, ...todoArray];

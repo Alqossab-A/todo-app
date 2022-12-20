@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateTodoComplete, deleteTodo } from '../todos/todosSlice';
+import useDaysLeft from '../../utils/useDaysLeft';
 
 import TextareaAutosize from 'react-textarea-autosize';
 
 const ArchivedTodo = (props) => {
     const todo = props.todo;
-    const { id, text, todoStatus, completed } = todo;
+    const { id, text, todoStatus, completed, dateToDelete } = todo;
 
-    const [status, setStatus] = useState(todoStatus);
     const [checked, setChecked] = useState(completed);
+    const daysLeft = useDaysLeft(dateToDelete);
 
     const dispatch = useDispatch();
 
@@ -21,7 +22,7 @@ const ArchivedTodo = (props) => {
     //obj being sent
     let baseTodo = {
         text: text,
-        todoStatus: status,
+        todoStatus: todoStatus,
         completed: checked,
         id: id,
     };
@@ -67,6 +68,7 @@ const ArchivedTodo = (props) => {
                         <span className='doneSpan'>Done</span>
                     </label>
                 </div>
+                <span className='historyCountdown'>~{daysLeft} days left</span>
             </div>
         );
 };

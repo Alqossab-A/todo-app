@@ -82,8 +82,12 @@ export const deleteExpiredSubTodos = createAsyncThunk(
 
         // Filter the subTodos array by dateToDelete
         const expiredSubTodos = data.filter(
-            (subTodo) => subTodo.dateToDelete <= currentTime
+            (subTodo) => subTodo.done && subTodo.dateToDelete <= currentTime
         );
+
+        if (expiredSubTodos.length === 0) {
+            return [];
+        }
 
         // Send a DELETE request to delete the expired subTodos from the server
         for (const subTodo of expiredSubTodos) {
@@ -91,6 +95,8 @@ export const deleteExpiredSubTodos = createAsyncThunk(
                 method: 'DELETE',
             });
         }
+
+        return expiredSubTodos.map((subTodo) => subTodo.id);
     }
 );
 
@@ -154,6 +160,7 @@ const subTodosSlice = createSlice({
             );
         },
         [deleteSubTodo.fulfilled]: (state, action) => {
+            // Update the state to remove deleted subtodo
             state.subTodosArray = state.subTodosArray.filter(
                 (subTodo) => subTodo.id !== action.payload.id
             );
@@ -169,6 +176,12 @@ const subTodosSlice = createSlice({
 
             // Update the subtodo in the global state
             state.subTodosArray[index] = updatedSubTodo;
+        },
+        [deleteExpiredSubTodos.fulfilled]: (state, action) => {
+            // Update the state to remove expired subtodo
+            state.subTodosArray = state.subTodosArray.filter(
+                (subTodo) => !subTodo.done || subTodo.dateToDelete > Date.now()
+            );
         },
     },
 });

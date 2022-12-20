@@ -1,9 +1,9 @@
-import Weeklys from '../weeklys/Weeklys';
+import MenuBar from '../menuBar/MenuBar';
 
 const DisplayFolders = () => {
     return (
         <>
-            <Weeklys />
+            <MenuBar />
         </>
     )
 };

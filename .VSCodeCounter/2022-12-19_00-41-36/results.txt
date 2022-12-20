@@ -1,0 +1,80 @@
+Date : 2022-12-19 00:41:36
+Directory : c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app
+Total : 38 files,  30257 codes, 57 comments, 231 blanks, all 30545 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          3 |     29,136 |          0 |          4 |     29,140 |
+| JavaScript |         30 |      1,000 |         34 |        203 |      1,237 |
+| CSS        |          2 |         86 |          0 |         14 |        100 |
+| HTML       |          1 |         20 |         23 |          1 |         44 |
+| Markdown   |          1 |         14 |          0 |          8 |         22 |
+| XML        |          1 |          1 |          0 |          1 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                   | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                      |         38 |     30,257 |         57 |        231 |     30,545 |
+| public                                                                                                 |          2 |         30 |         23 |          3 |         56 |
+| src                                                                                                    |         33 |      1,087 |         34 |        218 |      1,339 |
+| src\app                                                                                                |          2 |         12 |          0 |          2 |         14 |
+| src\app\shared                                                                                         |          1 |          1 |          0 |          0 |          1 |
+| src\components                                                                                         |          3 |         24 |          0 |          3 |         27 |
+| src\features                                                                                           |         17 |        855 |         26 |        171 |      1,052 |
+| src\features\display                                                                                   |          4 |         37 |          0 |         11 |         48 |
+| src\features\history                                                                                   |          4 |        148 |          4 |         33 |        185 |
+| src\features\subTodos                                                                                  |          4 |        310 |         11 |         61 |        382 |
+| src\features\todos                                                                                     |          4 |        354 |         11 |         65 |        430 |
+| src\features\weeklys                                                                                   |          1 |          6 |          0 |          1 |          7 |
+| src\pages                                                                                              |          1 |         17 |          0 |          3 |         20 |
+| src\utils                                                                                              |          2 |         27 |          1 |          7 |         35 |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                               | language   | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\README.md                               | Markdown   |         14 |          0 |          8 |         22 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\package-lock.json                       | JSON       |     29,081 |          0 |          1 |     29,082 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\package.json                            | JSON       |         45 |          0 |          1 |         46 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\public\index.html                       | HTML       |         20 |         23 |          1 |         44 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\public\manifest.json                    | JSON       |         10 |          0 |          2 |         12 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\App.css                             | CSS        |         74 |          0 |         12 |         86 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\App.js                              | JavaScript |         22 |          0 |          7 |         29 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\App.test.js                         | JavaScript |         13 |          0 |          3 |         16 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\app\shared\baseUrl.js               | JavaScript |          1 |          0 |          0 |          1 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\app\store.js                        | JavaScript |         11 |          0 |          2 |         13 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\components\Error.js                 | JavaScript |          6 |          0 |          1 |          7 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\components\Footer.js                | JavaScript |         10 |          0 |          1 |         11 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\components\Loading.js               | JavaScript |          8 |          0 |          1 |          9 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\display\DisplayHistory.js  | JavaScript |          9 |          0 |          3 |         12 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\display\DisplaySubTodos.js | JavaScript |          9 |          0 |          2 |         11 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\display\DisplayTodos.js    | JavaScript |         10 |          0 |          3 |         13 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\display\DisplayWeeklys.js  | JavaScript |          9 |          0 |          3 |         12 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\history\ArchivedSubTodo.js | JavaScript |         48 |          2 |         10 |         60 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\history\ArchivedTodo.js    | JavaScript |         61 |          2 |         12 |         75 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\history\History.js         | JavaScript |         11 |          0 |          4 |         15 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\history\HistoryList.js     | JavaScript |         28 |          0 |          7 |         35 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\subTodos\SubTodos.js       | JavaScript |         70 |          3 |         12 |         85 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\subTodos\SubTodosForm.js   | JavaScript |         34 |          0 |          6 |         40 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\subTodos\SubTodosList.js   | JavaScript |         42 |          0 |         12 |         54 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\subTodos\subTodosSlice.js  | JavaScript |        164 |          8 |         31 |        203 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\todos\Todos.js             | JavaScript |        117 |          3 |         15 |        135 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\todos\TodosForm.js         | JavaScript |         37 |          0 |          6 |         43 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\todos\TodosList.js         | JavaScript |         35 |          0 |         11 |         46 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\todos\todosSlice.js        | JavaScript |        165 |          8 |         33 |        206 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\features\weeklys\Weeklys.js         | JavaScript |          6 |          0 |          1 |          7 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\index.css                           | CSS        |         12 |          0 |          2 |         14 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\index.js                            | JavaScript |         17 |          3 |          4 |         24 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\logo.svg                            | XML        |          1 |          0 |          1 |          2 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\pages\HomePage.js                   | JavaScript |         17 |          0 |          3 |         20 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\reportWebVitals.js                  | JavaScript |         12 |          0 |          2 |         14 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\setupTests.js                       | JavaScript |          1 |          4 |          1 |          6 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\utils\formateDate.js                | JavaScript |          7 |          0 |          0 |          7 |
+| c:\Users\LeeGoGo\Desktop\NucampFolder\Portfolio\React\todo-app\src\utils\useCheckExpired.js            | JavaScript |         20 |          1 |          7 |         28 |
+| Total                                                                                                  |            |     30,257 |         57 |        231 |     30,545 |
++--------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

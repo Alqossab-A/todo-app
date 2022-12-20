@@ -12,7 +12,7 @@ const HistoryList = () => {
         ...state.subTodos.subTodosArray,
         ...state.todos.todosArray,
     ]);
-    
+
     const sortedArray = combinedArray
         .filter((item) => item.done === true || item.completed === true)
         .sort((a, b) => (a.dateToDelete > b.dateToDelete ? -1 : 1));

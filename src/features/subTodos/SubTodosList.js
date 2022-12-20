@@ -7,18 +7,13 @@ import SubTodos from './SubTodos';
 import SubTodoForm from './SubTodosForm';
 
 const SubTodosList = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const subTodos = useSelector(state => state.subTodos.subTodosArray);
     const memoizedSubTodos = useMemo(() => subTodos, [subTodos]);
 
     const isLoading = useSelector((state) => state.todos.isLoading);
     const errMsg = useSelector((state) => state.todos.errMsg);
-
-    const onDragStart = (e, index) => {
-        console.log('drag started', index);
-        
-    };
 
     if (isLoading) {
         return <Loading />;
