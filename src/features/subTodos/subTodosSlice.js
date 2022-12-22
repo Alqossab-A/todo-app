@@ -100,6 +100,21 @@ export const deleteExpiredSubTodos = createAsyncThunk(
     }
 );
 
+export const updateSubTodosPosition = createAsyncThunk(
+    'subTodos/updateSubTodoPosition',
+    async (subTodos) => {
+        const response = await fetch(baseUrl + `subTodos/all`, {
+            method: 'PUT',
+            body: JSON.stringify(subTodos),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+            return Promise.reject(response.status);
+        }
+    }
+);
+
 export const updateSubTodoDone = createAsyncThunk(
     'subTodos/updateSubTodoDone',
     async (subTodo) => {

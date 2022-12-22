@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/src/app/shared/baseUrl.js
+baseUrl.js
 
 # testing
 /coverage
