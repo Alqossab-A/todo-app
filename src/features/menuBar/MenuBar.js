@@ -1,6 +1,10 @@
 const MenuBar = () => {
     return (
-        <div>MenuBar</div>
+        <div className='menuBar'>
+            <div>logo</div>
+            <div>login</div>
+            <div>signUp</div>
+        </div>
     )
 }
 

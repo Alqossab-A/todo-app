@@ -47,7 +47,9 @@ const SubTodosList = () => {
     if (memoizedSubTodos && memoizedSubTodos.length >= 0) {
         return (
             <>
-                <SubTodoForm />
+                <div className='subTodoForm'>
+                {memoizedSubTodos.length >= 5? null : <SubTodoForm />}
+                </div>
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId='subTodosList'>
                         {(provided, snapshot) => (
