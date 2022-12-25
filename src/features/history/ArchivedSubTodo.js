@@ -41,7 +41,7 @@ const ArchivedSubTodo = (props) => {
                 <input
                     type='checkbox'
                     key={id}
-                    name={`completed${id}`}
+                    name={`done${id}`}
                     checked={checked}
                     onChange={HandleCompletion}
                 />
