@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-    deleteSubTodo,
-    updateSubTodo,
-    updateSubTodoDone,
-} from './subTodosSlice';
+    deleteWeekly,
+    updateWeekly,
+} from './weeklySlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -25,7 +24,7 @@ const Weekly = (props) => {
     };
 
     const debouncedDispatch = useMemo(
-        () => debounce((obj) => dispatch(updateSubTodo(obj)), 750),
+        () => debounce((obj) => dispatch(updateWeekly(obj)), 750),
         [dispatch]
     );
 
@@ -36,7 +35,7 @@ const Weekly = (props) => {
     };
 
     const HandleDelete = () => {
-        dispatch(deleteSubTodo(weeklyTask));
+        dispatch(deleteWeekly(weeklyTask));
     };
 
     if (done === false)
