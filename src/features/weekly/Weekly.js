@@ -1,25 +1,20 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-    deleteWeekly,
-    updateWeekly,
-} from './weeklySlice';
+import { deleteWeekly, updateWeekly } from './weeklySlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const Weekly = (props) => {
     const weekly = props.weekly;
-    const { id, text, done } = weekly;
+    const { id, text } = weekly;
     const dispatch = useDispatch();
 
     const [inputValue, setInputValue] = useState(text);
-    const [checked, setChecked] = useState(weekly.done);
 
     //obj being sent
     let weeklyTask = {
         text: inputValue,
-        done: checked,
         id: id,
     };
 
@@ -30,35 +25,37 @@ const Weekly = (props) => {
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
-        weeklyTask.subText = e.target.value;
+        weeklyTask.text = e.target.value;
         debouncedDispatch(weeklyTask);
     };
 
     const HandleDelete = () => {
-        dispatch(deleteWeekly(weeklyTask));
+        setInputValue('');
+        weeklyTask.text = '';
+        debouncedDispatch(weeklyTask);
     };
 
-    if (done === false)
-        return (
-            <div className='todoContainer' draggable>
-                <TextareaAutosize
-                    className='todoTextArea'
-                    maxLength={100}
-                    minRows={1}
-                    type='text'
-                    id={id}
-                    value={inputValue}
-                    onChange={handleChange}
-                />
-                <input
-                    type='checkbox'
-                    key={id}
-                    name={`completed${id}`}
-                    checked={false}
-                    onChange={HandleDelete}
-                />
-            </div>
-        );
+    return (
+        <div className='todoContainer' draggable>
+            <input
+                type='checkbox'
+                key={id}
+                name={`completed${id}`}
+                checked={false}
+                onChange={HandleDelete}
+            />
+            <TextareaAutosize
+                className='todoTextArea'
+                maxLength={100}
+                minRows={1}
+                type='text'
+                id={id}
+                value={inputValue}
+                placeholder='Enter weekly'
+                onChange={handleChange}
+            />
+        </div>
+    );
 };
 
 export default Weekly;

@@ -4,6 +4,7 @@ import { fetchSubTodos } from './features/subTodos/subTodosSlice';
 import { fetchTodos } from './features/todos/todosSlice';
 import HomePage from './pages/HomePage';
 import './App.css';
+import { fetchWeekly } from './features/weekly/weeklySlice';
 
 function App() {
     const isMounted = useRef();
@@ -14,6 +15,7 @@ function App() {
 
         dispatch(fetchTodos());
         dispatch(fetchSubTodos());
+        dispatch(fetchWeekly());
 
         isMounted.current = true;
     }, [dispatch]);

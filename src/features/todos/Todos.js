@@ -67,7 +67,7 @@ const Todos = (props) => {
     const HandleDelete = () => {
         dispatch(deleteTodo(todo));
     };
-
+    
     if (checked === false)
         return (
             <div className='todoContainer' draggable>
