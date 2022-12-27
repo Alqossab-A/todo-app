@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteWeekly, updateWeekly } from './weeklySlice';
+import { updateWeekly } from './weeklySlice';
 
 import debounce from 'lodash.debounce';
 import TextareaAutosize from 'react-textarea-autosize';
