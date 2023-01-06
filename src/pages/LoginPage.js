@@ -1,9 +1,9 @@
-import DisplayLogin from '../features/display/DisplayLogin';
+import LoginForm from '../features/user/LoginForm';
 
 const LoginPage = () => {
     return (
         <>
-            <DisplayLogin />
+            <LoginForm />
         </>
     )
 };

@@ -1,11 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MenuBar = () => {
     return (
         <div className='menuBar'>
             <div>logo</div>
-            <NavLink to='/login'>login</NavLink>
-            <button>signUp</button>
+            <Link to='/login'>login</Link>
+            <Link to='/signup'>signUp</Link>
         </div>
     )
 }
