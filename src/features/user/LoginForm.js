@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentUser, selectCurrentUser } from './userSlice';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import defaultAvatar from '../../app/assets/img/unicorn.png';
+import defaultAvatar from '../../app/assets/img/emots.png';
 import { validateUserLoginForm } from '../../utils/validateUserLoginForm';
 
 const LoginForm = () => {
-    const currentUser = useSelector(selectCurrentUser);
+    // const currentUser = useSelector(selectCurrentUser);
 
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const LoginForm = () => {
     return (
         <>
             <span className='navbar-text ml-auto'>
-                {currentUser ? (
+                {/* {currentUser ? (
                     <div style={{ width: '4rem', height: '4rem' }}>
                         <img
                             src={currentUser.avatar}
@@ -38,7 +38,7 @@ const LoginForm = () => {
                     >
                         <i className='fa fa-sign-in fa-lg' /> Login
                     </button>
-                )}
+                )} */}
             </span>
 
             <Formik

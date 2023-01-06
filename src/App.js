@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchSubTodos } from './features/subTodos/subTodosSlice';
 import { fetchTodos } from './features/todos/todosSlice';
-import HomePage from './pages/HomePage';
-import './App.css';
 import { fetchWeekly } from './features/weekly/weeklySlice';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import './App.css';
 
 function App() {
     const isMounted = useRef();
@@ -22,7 +24,10 @@ function App() {
 
     return (
         <div className='App'>
-            <HomePage />
+            <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='login' element={<LoginPage />} />
+            </Routes>
         </div>
     );
 }

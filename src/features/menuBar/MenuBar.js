@@ -1,8 +1,10 @@
+import { NavLink } from 'react-router-dom';
+
 const MenuBar = () => {
     return (
         <div className='menuBar'>
             <div>logo</div>
-            <button>login</button>
+            <NavLink to='/login'>login</NavLink>
             <button>signUp</button>
         </div>
     )
