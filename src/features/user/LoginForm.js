@@ -3,6 +3,7 @@ import { setCurrentUser, selectCurrentUser } from './userSlice';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import defaultAvatar from '../../app/assets/img/emots.png';
 import { validateUserLoginForm } from '../../utils/validateUserLoginForm';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
     // const currentUser = useSelector(selectCurrentUser);
@@ -21,7 +22,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <span className='navbar-text ml-auto'>
+            <span>
                 {/* {currentUser ? (
                     <div style={{ width: '4rem', height: '4rem' }}>
                         <img
@@ -79,6 +80,7 @@ const LoginForm = () => {
                     </button>
                 </Form>
             </Formik>
+            <Link to='/signup'>signUp</Link>
         </>
     );
 };
