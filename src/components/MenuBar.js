@@ -1,51 +1,58 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUser, logoutUser } from '../features/user/userSlice';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentUser, logoutUser, offlineUser } from "../features/user/userSlice";
 import {
-    MenuWrapper,
-    LoginSignUpWrapper,
-    StyledLogo,
-    StyledLogout,
-    StyledLogin,
-    StyledSignup,
-    StyledUsername,
-} from './styles/MenuBar.Styled';
+  MenuWrapper,
+  LoginSignUpWrapper,
+  StyledLogo,
+  StyledLogout,
+  StyledUsername,
+} from "./styles/MenuBar.Styled";
 
 const MenuBar = () => {
-    const currentUser = useSelector(selectCurrentUser);
-    const username = currentUser ? currentUser.username : null;
+  const currentUser = useSelector(selectCurrentUser);
+  const username = currentUser ? currentUser.username : null;
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const handleLogout = () => {
-        dispatch(logoutUser());
-    };
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
-    if (!username) {
-        return (
-            <MenuWrapper>
-                <StyledLogo to='/'></StyledLogo>
+  const handleOffline = () => {
+    dispatch(offlineUser());
+  };
 
-                <LoginSignUpWrapper>
-                    <StyledLogin to='/login'>Login</StyledLogin>
-                    <StyledSignup to='/signup'>Sign up</StyledSignup>
-                </LoginSignUpWrapper>
-            </MenuWrapper>
-        );
-    } else {
-        return (
-            <MenuWrapper>
-                <StyledLogo to='/'></StyledLogo>
+  if (!username) {
+    return (
+      <MenuWrapper>
+        <StyledLogo to="/"></StyledLogo>
 
-                <LoginSignUpWrapper>
-                    <StyledUsername>{username}</StyledUsername>
-                    <StyledLogout type='submit' onClick={handleLogout}>
-                        Logout
-                    </StyledLogout>
-                </LoginSignUpWrapper>
-            </MenuWrapper>
-        );
-    }
+        <LoginSignUpWrapper>
+          <button type="submit" onClick={handleOffline}>
+            offline mode
+          </button>
+          {/* 
+            <StyledLogin to='/login'>Login</StyledLogin>
+            <StyledSignup to='/signup'>Sign up</StyledSignup>
+          */}
+        </LoginSignUpWrapper>
+      </MenuWrapper>
+    );
+  } else {
+    return (
+      <MenuWrapper>
+        <StyledLogo to="/"></StyledLogo>
+
+        <LoginSignUpWrapper>
+          <StyledUsername>{username}</StyledUsername>
+          <StyledLogout type="submit" onClick={handleLogout}>
+            Logout
+          </StyledLogout>
+        </LoginSignUpWrapper>
+      </MenuWrapper>
+    );
+  }
 };
 
 export default MenuBar;

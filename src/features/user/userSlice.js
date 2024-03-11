@@ -48,6 +48,10 @@ export const logoutUser = createAsyncThunk('users/logout', async () => {
     return response.status;
 });
 
+export const offlineUser = (state) => {
+    state.currentUser = "offline";
+};
+
 export const postSignUp = createAsyncThunk(
     'users/postSignup',
     async (signup) => {
