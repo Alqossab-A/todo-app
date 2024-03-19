@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentUser, logoutUser, offlineUser } from "../features/user/userSlice";
+import {
+  selectCurrentUser,
+  logoutUser,
+  offlineUser,
+} from "../features/user/userSlice";
 import {
   MenuWrapper,
   LoginSignUpWrapper,
@@ -11,7 +15,12 @@ import {
 
 const MenuBar = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const username = currentUser ? currentUser.username : null;
+  const username =
+    currentUser === "offline"
+      ? "offline"
+      : currentUser
+        ? currentUser.username
+        : null;
 
   const dispatch = useDispatch();
 
