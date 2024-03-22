@@ -2,22 +2,36 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../../app/shared/baseUrl";
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  const localItem = localStorage.getItem("todos");
-  console.log(localItem);
-  if (localItem) {
-    return structuredClone(localItem);
+  // item is in double quotes when retrieved ""item""
+  const user = localStorage.getItem("user").replace(/['"]+/g, "");
+  console.log(user);
+  if (user === "offline") {
+    console.log("true");
+    /*
+    const todo = [
+      {
+        userId: "offline",
+        text: "hello",
+        completed: false,
+      },
+    ];
+    localStorage.setItem("todos", JSON.stringify(todo));
+    */
+    console.log(JSON.parse(localStorage.getItem("todos")));
+    return JSON.parse(localStorage.getItem("todos"));
+  } else {
+    console.log("false");
+    const response = await fetch(baseUrl + "todos", {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      return Promise.reject("Unable to fetch, status:" + response.status);
+    }
+
+    const data = await response.json();
+    return data;
   }
-
-  const response = await fetch(baseUrl + "todos", {
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    return Promise.reject("Unable to fetch, status:" + response.status);
-  }
-
-  const data = await response.json();
-  return data;
 });
 
 export const postTodo = createAsyncThunk(
