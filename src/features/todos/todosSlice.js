@@ -4,23 +4,10 @@ import { baseUrl } from "../../app/shared/baseUrl";
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   // item is in double quotes when retrieved ""item""
   const user = localStorage.getItem("user").replace(/['"]+/g, "");
-  console.log(user);
+
   if (user === "offline") {
-    console.log("true");
-    /*
-    const todo = [
-      {
-        userId: "offline",
-        text: "hello",
-        completed: false,
-      },
-    ];
-    localStorage.setItem("todos", JSON.stringify(todo));
-    */
-    console.log(JSON.parse(localStorage.getItem("todos")));
     return JSON.parse(localStorage.getItem("todos"));
   } else {
-    console.log("false");
     const response = await fetch(baseUrl + "todos", {
       credentials: "include",
     });
@@ -37,14 +24,40 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
 export const postTodo = createAsyncThunk(
   "todos/postTodo",
   async (todo, { dispatch }) => {
+    const user = localStorage.getItem("user").replace(/['"]+/g, "");
+
     if (todo.text === "") {
       return Promise.reject("empty input");
     }
 
-    const response = await fetch(baseUrl + "todos", {
-      method: "POST",
-      body: JSON.stringify(todo),
-      headers: { "Content-Type": "application/json" },
+    if (user === "offline") {
+      dispatch(addTodo(todo));
+    } else {
+      const response = await fetch(baseUrl + "todos", {
+        method: "POST",
+        body: JSON.stringify(todo),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        return Promise.reject(response.status);
+      }
+
+      const data = await response.json();
+      dispatch(addTodo(data));
+    }
+  },
+);
+
+export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todo) => {
+  const user = localStorage.getItem("user").replace(/['"]+/g, "");
+
+  if (user === "offline") {
+    return { _id: todo._id };
+  } else {
+    const response = await fetch(baseUrl + `todos/${todo._id}`, {
+      method: "DELETE",
       credentials: "include",
     });
 
@@ -52,23 +65,9 @@ export const postTodo = createAsyncThunk(
       return Promise.reject(response.status);
     }
 
-    const data = await response.json();
-    dispatch(addTodo(data));
-  },
-);
-
-export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todo) => {
-  const response = await fetch(baseUrl + `todos/${todo._id}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    return Promise.reject(response.status);
-  }
-
-  if (response.ok) {
-    return { _id: todo._id };
+    if (response.ok) {
+      return { _id: todo._id };
+    }
   }
 });
 
@@ -115,10 +114,22 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      const newTodo = {
-        ...action.payload,
-      };
-      state.todosArray.push(newTodo);
+      const user = localStorage.getItem("user").replace(/['"]+/g, "");
+
+      if (user === "offline") {
+        const newTodo = {
+          _id: state.todosArray.length + 1,
+          ...action.payload,
+        };
+        state.todosArray.push(newTodo);
+        let localArr = JSON.stringify(state.todosArray);
+        localStorage.setItem("todos", localArr);
+      } else {
+        const newTodo = {
+          ...action.payload,
+        };
+        state.todosArray.push(newTodo);
+      }
     },
   },
   extraReducers: {
@@ -144,7 +155,6 @@ const todosSlice = createSlice({
     },
     [deleteTodo.fulfilled]: (state, action) => {
       const deletedTodoId = action.payload._id;
-
       const updatedTodosArray = state.todosArray.filter(
         (todo) => todo._id !== deletedTodoId,
       );

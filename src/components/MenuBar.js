@@ -9,6 +9,8 @@ import {
   MenuWrapper,
   LoginSignUpWrapper,
   StyledLogo,
+  StyledLogin,
+  StyledSignup,
   StyledLogout,
   StyledUsername,
 } from "./styles/MenuBar.Styled";
@@ -29,6 +31,10 @@ const MenuBar = () => {
   };
 
   const handleOffline = () => {
+    localStorage.setItem("todos", "[]");
+    localStorage.setItem("subTodos", "[]");
+    localStorage.setItem("extraTodos", "[]");
+    localStorage.setItem("notes", "[]");
     dispatch(offlineUser());
   };
 
@@ -41,10 +47,8 @@ const MenuBar = () => {
           <button type="submit" onClick={handleOffline}>
             offline mode
           </button>
-          {/* 
-            <StyledLogin to='/login'>Login</StyledLogin>
-            <StyledSignup to='/signup'>Sign up</StyledSignup>
-          */}
+          <StyledLogin to="/login">Login</StyledLogin>
+          <StyledSignup to="/signup">Sign up</StyledSignup>
         </LoginSignUpWrapper>
       </MenuWrapper>
     );

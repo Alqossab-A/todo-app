@@ -7,13 +7,9 @@ export const fetchSubTodos = createAsyncThunk(
   async () => {
     // item is in double quotes when retrieved ""item""
     const user = localStorage.getItem("user").replace(/['"]+/g, "");
-    console.log(user);
     if (user === "offline") {
-      console.log("true");
-      console.log(JSON.parse(localStorage.getItem("subTodos")));
       return JSON.parse(localStorage.getItem("subTodos"));
     } else {
-      console.log("false");
       const response = await fetch(baseUrl + "subTodos", {
         credentials: "include",
       });
