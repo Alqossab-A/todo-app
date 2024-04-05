@@ -2,11 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../../app/shared/baseUrl";
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  // item is in double quotes when retrieved ""item""
-  const user = localStorage.getItem("user").replace(/['"]+/g, "");
-
-  if (user === "offline") {
-    return JSON.parse(localStorage.getItem("todos"));
+  if (JSON.parse(localStorage.getItem("user")) === "offline") {
+    return JSON.parse(localStorage.getItem("todos") ?? "[]");
   } else {
     const response = await fetch(baseUrl + "todos", {
       credentials: "include",
@@ -24,13 +21,11 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
 export const postTodo = createAsyncThunk(
   "todos/postTodo",
   async (todo, { dispatch }) => {
-    const user = localStorage.getItem("user").replace(/['"]+/g, "");
-
     if (todo.text === "") {
       return Promise.reject("empty input");
     }
 
-    if (user === "offline") {
+    if (JSON.parse(localStorage.getItem("user")) === "offline") {
       dispatch(addTodo(todo));
     } else {
       const response = await fetch(baseUrl + "todos", {
@@ -51,10 +46,8 @@ export const postTodo = createAsyncThunk(
 );
 
 export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todo) => {
-  const user = localStorage.getItem("user").replace(/['"]+/g, "");
-
-  if (user === "offline") {
-    return { _id: todo._id };
+  if (JSON.parse(localStorage.getItem("user")) === "offline") {
+    return todo;
   } else {
     const response = await fetch(baseUrl + `todos/${todo._id}`, {
       method: "DELETE",
@@ -114,20 +107,21 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      const user = localStorage.getItem("user").replace(/['"]+/g, "");
-
-      if (user === "offline") {
+      if (JSON.parse(localStorage.getItem("user")) === "offline") {
         const newTodo = {
           _id: state.todosArray.length + 1,
           ...action.payload,
         };
+
         state.todosArray.push(newTodo);
         let localArr = JSON.stringify(state.todosArray);
+
         localStorage.setItem("todos", localArr);
       } else {
         const newTodo = {
           ...action.payload,
         };
+
         state.todosArray.push(newTodo);
       }
     },
@@ -154,6 +148,14 @@ const todosSlice = createSlice({
       );
     },
     [deleteTodo.fulfilled]: (state, action) => {
+      if (JSON.parse(localStorage.getItem("user")) === "offline") {
+        let todos = JSON.parse(localStorage.getItem("todos"));
+
+        let filtered = todos.filter((todo) => todo._id !== action.payload._id);
+        let stringArr = JSON.stringify(filtered);
+
+        localStorage.setItem("todos", stringArr);
+      }
       const deletedTodoId = action.payload._id;
       const updatedTodosArray = state.todosArray.filter(
         (todo) => todo._id !== deletedTodoId,
