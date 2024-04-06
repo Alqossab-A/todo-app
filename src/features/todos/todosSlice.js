@@ -186,7 +186,6 @@ const todosSlice = createSlice({
       if (user === "offline") {
         let todos = JSON.parse(localStorage.getItem("todos"));
 
-        console.log("action", action.payload);
         const newTodos = todos.map((todo) => {
           if (todo._id === action.payload._id) {
             return { ...todo, text: action.payload.text };
