@@ -2,7 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../../app/shared/baseUrl";
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  if (JSON.parse(localStorage.getItem("user")) === "offline") {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user === "offline") {
     return JSON.parse(localStorage.getItem("todos") ?? "[]");
   } else {
     const response = await fetch(baseUrl + "todos", {
@@ -25,7 +27,9 @@ export const postTodo = createAsyncThunk(
       return Promise.reject("empty input");
     }
 
-    if (JSON.parse(localStorage.getItem("user")) === "offline") {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user === "offline") {
       dispatch(addTodo(todo));
     } else {
       const response = await fetch(baseUrl + "todos", {
@@ -46,7 +50,9 @@ export const postTodo = createAsyncThunk(
 );
 
 export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todo) => {
-  if (JSON.parse(localStorage.getItem("user")) === "offline") {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user === "offline") {
     return todo;
   } else {
     const response = await fetch(baseUrl + `todos/${todo._id}`, {
@@ -65,15 +71,21 @@ export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todo) => {
 });
 
 export const updateTodo = createAsyncThunk("todos/updateTodo", async (todo) => {
-  const response = await fetch(baseUrl + `todos/${todo._id}`, {
-    method: "PUT",
-    body: JSON.stringify(todo),
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-  });
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  if (!response.ok) {
-    return Promise.reject(response.status);
+  if (user === "offline") {
+    return todo;
+  } else {
+    const response = await fetch(baseUrl + `todos/${todo._id}`, {
+      method: "PUT",
+      body: JSON.stringify(todo),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      return Promise.reject(response.status);
+    }
   }
 });
 
@@ -107,7 +119,9 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      if (JSON.parse(localStorage.getItem("user")) === "offline") {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user === "offline") {
         const newTodo = {
           _id: state.todosArray.length + 1,
           ...action.payload,
@@ -121,7 +135,6 @@ const todosSlice = createSlice({
         const newTodo = {
           ...action.payload,
         };
-
         state.todosArray.push(newTodo);
       }
     },
@@ -148,22 +161,44 @@ const todosSlice = createSlice({
       );
     },
     [deleteTodo.fulfilled]: (state, action) => {
-      if (JSON.parse(localStorage.getItem("user")) === "offline") {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user === "offline") {
         let todos = JSON.parse(localStorage.getItem("todos"));
 
         let filtered = todos.filter((todo) => todo._id !== action.payload._id);
+        state.todosArray = filtered;
+
         let stringArr = JSON.stringify(filtered);
-
         localStorage.setItem("todos", stringArr);
+      } else {
+        const deletedTodoId = action.payload._id;
+        const updatedTodosArray = state.todosArray.filter(
+          (todo) => todo._id !== deletedTodoId,
+        );
+
+        state.todosArray = updatedTodosArray;
       }
-      const deletedTodoId = action.payload._id;
-      const updatedTodosArray = state.todosArray.filter(
-        (todo) => todo._id !== deletedTodoId,
-      );
-
-      state.todosArray = updatedTodosArray;
     },
+    [updateTodo.fulfilled]: (state, action) => {
+      const user = JSON.parse(localStorage.getItem("user"));
 
+      if (user === "offline") {
+        let todos = JSON.parse(localStorage.getItem("todos"));
+
+        console.log("action", action.payload);
+        const newTodos = todos.map((todo) => {
+          if (todo._id === action.payload._id) {
+            return { ...todo, text: action.payload.text };
+          }
+          return todo;
+        });
+
+        let result = JSON.stringify(newTodos);
+        localStorage.setItem("todos", result);
+        state.todosArray = newTodos;
+      }
+    },
     [updateTodoComplete.fulfilled]: (state, action) => {
       const updateTodoCompleteID = action.payload._id;
 
