@@ -12,6 +12,7 @@ import {
   StyledLogin,
   StyledSignup,
   StyledLogout,
+  StyledOffline,
   StyledUsername,
 } from "./styles/MenuBar.Styled";
 
@@ -44,11 +45,13 @@ const MenuBar = () => {
         <StyledLogo to="/"></StyledLogo>
 
         <LoginSignUpWrapper>
-          <button type="submit" onClick={handleOffline}>
+          <StyledOffline type="submit" onClick={handleOffline}>
             offline mode
-          </button>
+          </StyledOffline>
+          {/*
           <StyledLogin to="/login">Login</StyledLogin>
           <StyledSignup to="/signup">Sign up</StyledSignup>
+          */}
         </LoginSignUpWrapper>
       </MenuWrapper>
     );

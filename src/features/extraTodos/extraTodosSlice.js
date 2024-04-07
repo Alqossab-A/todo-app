@@ -5,8 +5,8 @@ import { baseUrl } from "../../app/shared/baseUrl";
 export const fetchExtraTodos = createAsyncThunk(
   "extraTodos/fetchExtraTodos",
   async () => {
-    // item is in double quotes when retrieved ""item""
-    const user = localStorage.getItem("user").replace(/['"]+/g, "");
+    const user = JSON.parse(localStorage.getItem("user"));
+
     if (user === "offline") {
       return JSON.parse(localStorage.getItem("extraTodos") ?? "[]");
     } else {
@@ -30,35 +30,24 @@ export const postExtraTodo = createAsyncThunk(
     if (extraTodo.extraText === "") {
       return Promise.reject("empty input");
     }
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    const response = await fetch(baseUrl + "extraTodos", {
-      method: "POST",
-      body: JSON.stringify(extraTodo),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    if (user === "offline") {
+      dispatch(addExtraTodo(extraTodo));
+    } else {
+      const response = await fetch(baseUrl + "extraTodos", {
+        method: "POST",
+        body: JSON.stringify(extraTodo),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
-    if (!response.ok) {
-      return Promise.reject(response.status);
-    }
+      if (!response.ok) {
+        return Promise.reject(response.status);
+      }
 
-    const data = await response.json();
-    dispatch(addExtraTodo(data));
-  },
-);
-
-export const updateExtraTodo = createAsyncThunk(
-  "extraTodos/updateExtraTodo",
-  async (extraTodo) => {
-    const response = await fetch(baseUrl + `extraTodos/${extraTodo._id}`, {
-      method: "PUT",
-      body: JSON.stringify(extraTodo),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      return Promise.reject(response.status);
+      const data = await response.json();
+      dispatch(addExtraTodo(data));
     }
   },
 );
@@ -66,17 +55,45 @@ export const updateExtraTodo = createAsyncThunk(
 export const deleteExtraTodo = createAsyncThunk(
   "extraTodos/deleteExtraTodo",
   async (extraTodo) => {
-    const response = await fetch(baseUrl + `extraTodos/${extraTodo._id}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!response.ok) {
-      return Promise.reject(response.status);
+    if (user === "offline") {
+      return extraTodo;
+    } else {
+      const response = await fetch(baseUrl + `extraTodos/${extraTodo._id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        return Promise.reject(response.status);
+      }
+
+      if (response.ok) {
+        return { _id: extraTodo._id };
+      }
     }
+  },
+);
 
-    if (response.ok) {
-      return { _id: extraTodo._id };
+export const updateExtraTodo = createAsyncThunk(
+  "extraTodos/updateExtraTodo",
+  async (extraTodo) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user === "offline") {
+      return extraTodo;
+    } else {
+      const response = await fetch(baseUrl + `extraTodos/${extraTodo._id}`, {
+        method: "PUT",
+        body: JSON.stringify(extraTodo),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        return Promise.reject(response.status);
+      }
     }
   },
 );
@@ -111,10 +128,24 @@ const extraTodosSlice = createSlice({
   initialState,
   reducers: {
     addExtraTodo: (state, action) => {
-      const newExtraTodo = {
-        ...action.payload,
-      };
-      state.extraTodosArray.push(newExtraTodo);
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user === "offline") {
+        const newExtraTodo = {
+          _id: state.extraTodosArray.length + 1,
+          ...action.payload,
+        };
+
+        state.extraTodosArray.push(newExtraTodo);
+        let localArr = JSON.stringify(state.extraTodosArray);
+
+        localStorage.setItem("extraTodos", localArr);
+      } else {
+        const newExtraTodo = {
+          ...action.payload,
+        };
+        state.extraTodosArray.push(newExtraTodo);
+      }
     },
   },
   extraReducers: {
@@ -139,13 +170,45 @@ const extraTodosSlice = createSlice({
       );
     },
     [deleteExtraTodo.fulfilled]: (state, action) => {
-      const deletedExtraTodoId = action.payload._id;
+      const user = JSON.parse(localStorage.getItem("user"));
 
-      const updatedExtraTodosArray = state.extraTodosArray.filter(
-        (extraTodo) => extraTodo._id !== deletedExtraTodoId,
-      );
+      if (user === "offline") {
+        let extraTodos = JSON.parse(localStorage.getItem("extraTodos"));
 
-      state.extraTodosArray = updatedExtraTodosArray;
+        let filtered = extraTodos.filter(
+          (extraTodo) => extraTodo._id !== action.payload._id,
+        );
+        state.extraTodosArray = filtered;
+
+        let stringArr = JSON.stringify(filtered);
+        localStorage.setItem("extraTodos", stringArr);
+      } else {
+        const deletedExtraTodoId = action.payload._id;
+
+        const updatedExtraTodosArray = state.extraTodosArray.filter(
+          (extraTodo) => extraTodo._id !== deletedExtraTodoId,
+        );
+
+        state.extraTodosArray = updatedExtraTodosArray;
+      }
+    },
+    [updateExtraTodo.fulfilled]: (state, action) => {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user === "offline") {
+        let extraTodos = JSON.parse(localStorage.getItem("extraTodos"));
+
+        const newExtraTodos = extraTodos.map((extraTodo) => {
+          if (extraTodo._id === action.payload._id) {
+            return { ...extraTodo, extraText: action.payload.extraText };
+          }
+          return extraTodo;
+        });
+
+        let result = JSON.stringify(newExtraTodos);
+        localStorage.setItem("extraTodos", result);
+        state.extraTodosArray = newExtraTodos;
+      }
     },
     [updateExtraTodoDone.fulfilled]: (state, action) => {
       const updateExtraTodoID = action.payload._id;

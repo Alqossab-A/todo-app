@@ -49,9 +49,9 @@ const HomePage = () => {
       <MenuBar />
       {username === null ? (
         <LContainer>
-          <h2 style={{ color: "red", alignSelf: "center" }}>
-            Server under maintenance try offline mode
-          </h2>
+          <h3 style={{ fontWeight: "500", color: "red", alignSelf: "center" }}>
+            Servers are in migration, try out the offline mode
+          </h3>
           <WelcomeMsg>Welcome to Notes</WelcomeMsg>
           <WelcomeBody>
             Notes takes a simple approach to task handling and managing your
